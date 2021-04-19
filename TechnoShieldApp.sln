@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnoShieldApp", "TechnoShieldApp\TechnoShieldApp.csproj", "{091D669B-6255-436A-8828-9DF18A31D176}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{091D669B-6255-436A-8828-9DF18A31D176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091D669B-6255-436A-8828-9DF18A31D176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091D669B-6255-436A-8828-9DF18A31D176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091D669B-6255-436A-8828-9DF18A31D176}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7CDCFAC-1817-4C2C-9E7B-23766C6A1C14}
+	EndGlobalSection
+EndGlobal

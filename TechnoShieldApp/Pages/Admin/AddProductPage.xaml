@@ -1,0 +1,73 @@
+﻿<Page x:Class="TechnoShieldApp.Pages.Admin.AddProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TechnoShieldApp.Pages.Admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1000"
+      Title="Добавление товара">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" Style="{StaticResource TbkBody}" FontWeight="Bold" FontSize="24">Основная информация о товаре</TextBlock>
+            <StackPanel  Orientation="Horizontal">
+                <StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TbkBody}">Название:</TextBlock>
+                        <TextBox x:Name="TbName" Text="{Binding Name}" Width="300"></TextBox>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Top" Style="{StaticResource TbkBody}">Описание:</TextBlock>
+                        <TextBox x:Name="TbDescription" Text="{Binding Description}" Width="300" Height="209"></TextBox>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <TextBlock TextAlignment="Right" Width="125" Style="{StaticResource TbkBody}">Тип товара:</TextBlock>
+                        <ComboBox DisplayMemberPath="Name" Width="240" Name="CbTypeOfProduct"></ComboBox>
+                        <Button Width="50">+</Button>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <TextBlock TextAlignment="Right" Width="125" Style="{StaticResource TbkBody}">Цена:</TextBlock>
+                        <TextBox Width="300" Text="{Binding Price}" Name="TbPrice"></TextBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <Border HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1" Height="285" Margin="5" Width="250">
+                        <Grid>
+                            <Image SourceUpdated="ImgProduct_SourceUpdated" x:Name="ImgProduct" Source="{Binding Photo}"></Image>
+                            <TextBlock Visibility="Collapsed" x:Name="TblDeletePhoto" Cursor="Hand" Style="{StaticResource TbkBody}" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown" Foreground="Red" FontSize="26" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,5,0">X</TextBlock>
+                        </Grid>
+                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox IsReadOnly="True" Name="TbPath"></TextBox>
+                        <Button x:Name="BtnPhoto" Click="BtnPhoto_Click" FontSize="16">Загрузить фото...</Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock TextAlignment="Right" Width="125" Style="{StaticResource TbkBody}" FontSize="24">Тип услуги:</TextBlock>
+                    <ComboBox DisplayMemberPath="Name" IsTextSearchEnabled="True" IsEditable="True" Name="CbTypeOfService" Width="620"></ComboBox>
+                </StackPanel>
+                <!--<Border BorderBrush="Black" BorderThickness="1"  Margin="5 0">-->
+                    <!--<ScrollViewer Height="150">
+                        <ItemsControl x:Name="ICSelectedService"  Width="745">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock TextWrapping="Wrap" Width="670" Style="{StaticResource TbkBody}" Text="{Binding Name}"></TextBlock>
+                                        <Button Click="BtnDeleteService_Click" x:Name="BtnDeleteService" Width="50">-</Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>-->
+                <!--</Border>-->
+            </StackPanel>
+            <StackPanel Margin="0 10 0 0" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button x:Name="BtnCancel" Click="BtnCancel_Click">Отмена</Button>
+                <Button Width="200" x:Name="BtnSave" Click="BtnSave_Click">Добавить</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

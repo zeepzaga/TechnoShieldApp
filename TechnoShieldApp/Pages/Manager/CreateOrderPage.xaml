@@ -1,0 +1,178 @@
+﻿<Page x:Class="TechnoShieldApp.Pages.Manager.CreateOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TechnoShieldApp.Pages.Manager"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="Создание заказа">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="SpOrganization" Margin="5">
+            <TextBlock HorizontalAlignment="Center" Style="{StaticResource TbkBody}" FontSize="30">Заказчик</TextBlock>
+            <TextBlock Margin="5 5 5 0" Style="{StaticResource TbkBody}">Название компании:</TextBlock>
+            <ComboBox IsTextSearchEnabled="True" SelectionChanged="CbOrganizationName_SelectionChanged" IsEditable="True" Name="CbOrganizationName" Width="300"></ComboBox>
+            <TextBlock Margin="5 5 5 0" VerticalAlignment="Top" Style="{StaticResource TbkBody}">Номер телефона:</TextBlock>
+            <TextBox Text="{Binding TelephoneNumber}" MaxLength="12" x:Name="TbOrganizationTelephone" Width="300" TextWrapping="Wrap"></TextBox>
+            <TextBlock Margin="5 5 5 0" VerticalAlignment="Top" Style="{StaticResource TbkBody}" >Адрес:</TextBlock>
+            <TextBox x:Name="TbOrganizationAddress" Text="{Binding Address}" Width="300" Height="75" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap"></TextBox>
+            <TextBlock HorizontalAlignment="Center" Style="{StaticResource TbkBody}" FontSize="30">Информация о заказе</TextBlock>
+            <TextBlock Margin="5 5 5 0" Style="{StaticResource TbkBody}">Дата начала работ:</TextBlock>
+            <DatePicker Name="DpDateTimeOfWork" Width="300"></DatePicker>
+            <TextBlock Margin="5 5 5 0" Style="{StaticResource TbkBody}">Время начала работ:</TextBlock>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBox MaxLength="2" TextAlignment="Center" PreviewTextInput="TbHoursOrder_PreviewTextInput" PreviewKeyDown="TbMinutes_KeyDown" x:Name="TbHoursOrder" Width="50"></TextBox>
+                <TextBlock Style="{StaticResource TbkBody}">Ч</TextBlock>
+                <TextBox MaxLength="2" TextAlignment="Center" PreviewTextInput="TbHoursOrder_PreviewTextInput" PreviewKeyDown="TbMinutes_KeyDown" x:Name="TbMinutes" Width="50"></TextBox>
+                <TextBlock Style="{StaticResource TbkBody}">МИН</TextBlock>
+            </StackPanel>
+            <Button Click="BtnSave_Click" x:Name="BtnSave" Width="auto">Сохранить заказ</Button>
+        </StackPanel>
+        <TabControl Grid.Column="1">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TbkTriggered}">Запись услуги</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="1.5*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel HorizontalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TbkBody}">Тип услуги:</TextBlock>
+                        <ComboBox Width="250" DisplayMemberPath="Name" SelectionChanged="CbTypeOfService_SelectionChanged" Name="CbTypeOfService"></ComboBox>
+                        <TextBlock Style="{StaticResource TbkBody}">Услуга:</TextBlock>
+                        <ComboBox Width="320" DisplayMemberPath="Name" SelectionChanged="CbService_SelectionChanged" Name="CbService"></ComboBox>
+                        <Button IsEnabled="False" x:Name="BtnAddService" Click="BtnAddService_Click" Width="50">+</Button>
+                    </StackPanel>
+                    <Border Margin="5" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                        <ScrollViewer>
+                            <ItemsControl HorizontalAlignment="Center" x:Name="ICProduct">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel></WrapPanel>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Height="300" Width="274.85" BorderBrush="Black" BorderThickness="1">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <Image Margin="5"  Height="80" Width="150" x:Name="ImgProduct" Source="{Binding Photo, TargetNullValue= {StaticResource NullImage}}"></Image>
+                                                    <TextBlock Height="100" Text="{Binding Name}" Style="{StaticResource TbkBody}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                                                    <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Price}"></TextBlock>
+                                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                        <TextBlock Style="{StaticResource TbkBody}">Количество:</TextBlock>
+                                                        <TextBox PreviewTextInput="TbHoursOrder_PreviewTextInput" PreviewKeyDown="TbMinutes_KeyDown" TextAlignment="Center" MaxLength="3" Width="60" Text="{Binding CountOnOrder}" Name="TbCountProductOnOrder" TextChanged="TbCountProductOnOrder_TextChanged"></TextBox>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                    <Border Margin="5" Grid.Row="2" BorderBrush="Black" BorderThickness="1">
+                        <ListView SelectionChanged="LbSelectedService_SelectionChanged" x:Name="LbSelectedService" SelectionMode="Single" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource TbkBody}" Text="{Binding Name}"></TextBlock>
+                                        <Button x:Name="BtnDeleteServiceFromOrder" Click="BtnDeleteServiceFromOrder_Click" Grid.Column="1">Убрать</Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TbkTriggered}">Товары для покупки</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TbkBody}">Поиск</TextBlock>
+                        <TextBox Width="250" TextChanged="TbSearchProduct_TextChanged" x:Name="TbSearchProduct"></TextBox>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border  Margin="5" BorderBrush="Black" BorderThickness="1">
+                            <ScrollViewer>
+                                <ItemsControl HorizontalAlignment="Center" x:Name="ICAllProducts">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel></WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Height="300" Width="198.91" BorderBrush="Black" BorderThickness="1">
+                                                <StackPanel>
+                                                    <Image Margin="5"  Height="80" Width="150" x:Name="ImgProduct" Source="{Binding Photo, TargetNullValue= {StaticResource NullImage}}"></Image>
+                                                    <TextBlock Height="100"  Text="{Binding Name}" Style="{StaticResource TbkBody}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                                                    <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Price}"></TextBlock>
+                                                    <Button VerticalAlignment="Bottom" Width="auto" Name="BtnAddToPurchase" Click="BtnAddToPurchase_Click">Добавить в заказ</Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Border>
+                        <Border Margin="5" BorderBrush="Black" BorderThickness="1" Grid.Column="1">
+                            <ScrollViewer>
+                                <ItemsControl HorizontalAlignment="Center" x:Name="ICSelectedProducts">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel></WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Height="300" Width="198.9" BorderBrush="Black" BorderThickness="1">
+                                                <Grid>
+                                                    <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10 5" Cursor="Hand" Style="{StaticResource TbkBody}" Foreground="Red" Name="TblDeleteProductFromOrder" MouseLeftButtonDown="TblDeleteProductFromOrder_MouseLeftButtonDown">X</TextBlock>
+                                                    <StackPanel VerticalAlignment="Bottom">
+                                                        <Image Margin="5"  Height="80" Width="150" x:Name="ImgProduct" Source="{Binding Product.Photo, TargetNullValue= {StaticResource NullImage}}"></Image>
+                                                        <TextBlock Height="100" Text="{Binding Product.Name}" Style="{StaticResource TbkBody}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                                                        <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Product.Price}"></TextBlock>
+                                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                            <TextBlock Style="{StaticResource TbkBody}">Количество:</TextBlock>
+                                                            <TextBox Width="50" TextAlignment="Center" MaxLength="3" HorizontalAlignment="Center" PreviewTextInput="TbHoursOrder_PreviewTextInput" PreviewKeyDown="TbMinutes_KeyDown" Text="{Binding Count}" Name="TbProductPurchase" TextChanged="TbProductPurchase_TextChanged"></TextBox>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
