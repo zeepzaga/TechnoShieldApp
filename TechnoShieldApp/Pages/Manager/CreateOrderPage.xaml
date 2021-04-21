@@ -19,7 +19,7 @@
         <StackPanel x:Name="SpOrganization" Margin="5">
             <TextBlock HorizontalAlignment="Center" Style="{StaticResource TbkBody}" FontSize="30">Заказчик</TextBlock>
             <TextBlock Margin="5 5 5 0" Style="{StaticResource TbkBody}">Название компании:</TextBlock>
-            <ComboBox IsTextSearchEnabled="True" SelectionChanged="CbOrganizationName_SelectionChanged" IsEditable="True" Name="CbOrganizationName" Width="300"></ComboBox>
+            <ComboBox DisplayMemberPath="Name" IsTextSearchEnabled="True" SelectionChanged="CbOrganizationName_SelectionChanged" IsEditable="True" Name="CbOrganizationName" Width="300"></ComboBox>
             <TextBlock Margin="5 5 5 0" VerticalAlignment="Top" Style="{StaticResource TbkBody}">Номер телефона:</TextBlock>
             <TextBox Text="{Binding TelephoneNumber}" MaxLength="12" x:Name="TbOrganizationTelephone" Width="300" TextWrapping="Wrap"></TextBox>
             <TextBlock Margin="5 5 5 0" VerticalAlignment="Top" Style="{StaticResource TbkBody}" >Адрес:</TextBlock>
@@ -86,14 +86,10 @@
                         <ListView SelectionChanged="LbSelectedService_SelectionChanged" x:Name="LbSelectedService" SelectionMode="Single" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Style="{StaticResource TbkBody}" Text="{Binding Name}"></TextBlock>
-                                        <Button x:Name="BtnDeleteServiceFromOrder" Click="BtnDeleteServiceFromOrder_Click" Grid.Column="1">Убрать</Button>
-                                    </Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="BtnDeleteServiceFromOrder" Click="BtnDeleteServiceFromOrder_Click" >Убрать</Button>
+                                        <TextBlock Style="{StaticResource TbkBody}" Text="{Binding Name}" HorizontalAlignment="Stretch" Grid.Column="1"></TextBlock>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

@@ -68,8 +68,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="ServiceId" Type="int" Nullable="false" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
         </EntityType>
@@ -77,7 +77,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -232,7 +232,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceOfProductInOrder_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="ServiceOfProductInOrder" Type="Self.ServiceOfProductInOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -524,8 +524,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="ServiceId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderId" Type="Int32" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Order" Relationship="TechnoShieldBaseModel.FK_ServiceOfProductInOrder_Order" FromRole="ServiceOfProductInOrder" ToRole="Order" />
@@ -536,7 +536,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Order" Relationship="TechnoShieldBaseModel.FK_Order_StatusOfOrder" FromRole="StatusOfOrder" ToRole="Order" />
         </EntityType>
@@ -679,7 +679,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceOfProductInOrder_Product">
-          <End Type="TechnoShieldBaseModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="TechnoShieldBaseModel.Product" Role="Product" Multiplicity="0..1" />
           <End Type="TechnoShieldBaseModel.ServiceOfProductInOrder" Role="ServiceOfProductInOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">

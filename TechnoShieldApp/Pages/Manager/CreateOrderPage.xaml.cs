@@ -72,6 +72,16 @@ namespace TechnoShieldApp.Pages.Manager
         private void BtnAddService_Click(object sender, RoutedEventArgs e)
         {
             _listSelectedService.Add(CbService.SelectedItem as Service);
+            _listService.Remove(CbService.SelectedItem as Service);
+            UpdateServicesCollection();
+        }
+
+        private void UpdateServicesCollection()
+        {
+            CbService.ItemsSource = null;
+            CbService.ItemsSource = _listService.Where(p => p.TypeOfService == CbTypeOfService.SelectedItem as TypeOfService).ToList().OrderBy(p => p.Id).ToList();
+            CbService.IsEnabled = true;
+            BtnAddService.IsEnabled = false;
             LbSelectedService.ItemsSource = null;
             LbSelectedService.ItemsSource = _listSelectedService;
         }
@@ -130,9 +140,7 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void CbTypeOfService_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CbService.ItemsSource = _listService.Where(p => p.TypeOfService == CbTypeOfService.SelectedItem as TypeOfService).ToList();
-            CbService.IsEnabled = true;
-            BtnAddService.IsEnabled = false;
+            UpdateServicesCollection();
         }
 
         private void CbService_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -142,7 +150,13 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            var organization = new Organization();
+            Organization organization = new Organization();
+            if (CbOrganizationName.SelectedItem == null)
+            {
+                organization.Name = CbOrganizationName.Text;
+                organization.TelephoneNumber = TbOrganizationTelephone.Text;
+                organization.Address = TbOrganizationAddress.Text;
+            }
             DateTime? dateTimeOfWork = null;
             if (DpDateTimeOfWork.SelectedDate != null)
                 dateTimeOfWork = new DateTime(DpDateTimeOfWork.SelectedDate.Value.Year, DpDateTimeOfWork.SelectedDate.Value.Month,
@@ -173,6 +187,20 @@ namespace TechnoShieldApp.Pages.Manager
                     Order = order
                 });
             }
+            foreach (var item in _listSelectedService)
+            {
+                if (_listServiceOfProductInOrder.FirstOrDefault(p => p.Service == item) == null)
+                {
+                    AppData.Context.ServiceOfProductInOrder.Add(new ServiceOfProductInOrder
+                    {
+                        Product = null,
+                        Count = 0,
+                        Order = order,
+                        Service = item,
+                    });
+                }
+            }
+            AppData.Context.SaveChanges();
         }
         private void TbMinutes_KeyDown(object sender, KeyEventArgs e)
         {
@@ -237,7 +265,10 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnDeleteServiceFromOrder_Click(object sender, RoutedEventArgs e)
         {
-            //Придумать удаление не той услуги!
+            _listSelectedService.Remove((sender as Button).DataContext as Service);
+            _listServiceOfProductInOrder.RemoveAll(p => p.Service == (sender as Button).DataContext as Service);
+            _listService.Add((sender as Button).DataContext as Service);
+            UpdateServicesCollection();
         }
     }
 }
