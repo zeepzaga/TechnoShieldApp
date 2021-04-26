@@ -27,7 +27,7 @@ namespace TechnoShieldApp
         {
             InitializeComponent();
             AppData.MainFrame = MainFrame;
-            AppData.MainFrame.Navigate(new CreateOrderPage());
+            AppData.MainFrame.Navigate(new WorkerOfOrderPage(AppData.Context.Order.ToList().LastOrDefault()));
         }
 
         private void MainFrame_ContentRendered(object sender, EventArgs e)

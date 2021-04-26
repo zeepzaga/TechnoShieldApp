@@ -171,6 +171,7 @@ namespace TechnoShieldApp.Pages.Admin
         {
             ((sender as Button).DataContext as Product).TypeOfService = null;
             AppData.Context.SaveChanges();
+            (((sender as Button).Parent as StackPanel).Parent as Border).Visibility = Visibility.Collapsed;
         }
 
         private void TbSearhTypeOfService_TextChanged(object sender, TextChangedEventArgs e)

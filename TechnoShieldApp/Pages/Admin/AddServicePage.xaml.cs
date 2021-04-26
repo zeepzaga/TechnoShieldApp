@@ -73,7 +73,7 @@ namespace TechnoShieldApp.Pages.Admin
                 foreach (var item in _listSelectedProduct)
                 {
                     TypeOfService typeOfService = CbTypeOfService.SelectedItem as TypeOfService;
-                    if (typeOfService.Product.ToList().Where(p => p.Id == item.Id) == null)
+                    if (typeOfService.Product.ToList().Where(p => p.Id == item.Id) != null)
                     {
                         var product = AppData.Context.Product.ToList().FirstOrDefault(p=>p.Id == item.Id);
                         product.TypeOfService = typeOfService;

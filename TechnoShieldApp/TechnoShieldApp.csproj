@@ -170,6 +170,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Manager\WorkerOfOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\Admin\AddProductPage.xaml.cs">
@@ -192,6 +196,9 @@
     </Compile>
     <Compile Include="Pages\Manager\OrderDetailViewPage.xaml.cs">
       <DependentUpon>OrderDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\WorkerOfOrderPage.xaml.cs">
+      <DependentUpon>WorkerOfOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

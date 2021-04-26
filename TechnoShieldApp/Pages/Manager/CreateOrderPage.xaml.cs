@@ -26,12 +26,13 @@ namespace TechnoShieldApp.Pages.Manager
         private List<Product> _listProduct = new List<Product>();
         private List<Purchase> _listPurchase = new List<Purchase>();
         private List<ServiceOfProductInOrder> _listServiceOfProductInOrder = new List<ServiceOfProductInOrder>();
+        private decimal _totalOrderPrice = 0;
         Order order = new Order();
 
         public CreateOrderPage()
         {
             InitializeComponent();
-
+            DpDateTimeOfWork.DisplayDateStart = DateTime.Now;
             try
             {
                 CbOrganizationName.ItemsSource = AppData.Context.Organization.ToList();
@@ -74,6 +75,7 @@ namespace TechnoShieldApp.Pages.Manager
             _listSelectedService.Add(CbService.SelectedItem as Service);
             _listService.Remove(CbService.SelectedItem as Service);
             UpdateServicesCollection();
+            SumTotalOrderPrice();
         }
 
         private void UpdateServicesCollection()
@@ -84,6 +86,24 @@ namespace TechnoShieldApp.Pages.Manager
             BtnAddService.IsEnabled = false;
             LbSelectedService.ItemsSource = null;
             LbSelectedService.ItemsSource = _listSelectedService;
+        }
+
+        private void SumTotalOrderPrice()
+        {
+            _totalOrderPrice = 0;
+            foreach (var item in _listSelectedService)
+            {
+                _totalOrderPrice += item.Price;
+            }
+            foreach (var item in _listServiceOfProductInOrder)
+            {
+                _totalOrderPrice += item.Product.Price * item.Count;
+            }
+            foreach (var item in _listPurchase)
+            {
+                _totalOrderPrice += item.Count * item.Product.Price;
+            }
+            TbTotalPrice.Text = $"Общая стоимость заказа: {_totalOrderPrice} р.";
         }
 
         private void TbCountProductOnOrder_TextChanged(object sender, TextChangedEventArgs e)
@@ -106,7 +126,7 @@ namespace TechnoShieldApp.Pages.Manager
                         Service = LbSelectedService.SelectedItem as Service
                     });
                 }
-
+                SumTotalOrderPrice();
 
                 //product.CountOnOrder = int.Parse((sender as TextBox).Text);
                 //var productOnService = _listServiceOfProductInOrder.Where(p => p.Product.Id == product.Id && p.Service == LbSelectedService.SelectedItem as Service).ToList();
@@ -146,6 +166,7 @@ namespace TechnoShieldApp.Pages.Manager
         private void CbService_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BtnAddService.IsEnabled = true;
+            SumTotalOrderPrice();
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -156,6 +177,10 @@ namespace TechnoShieldApp.Pages.Manager
                 organization.Name = CbOrganizationName.Text;
                 organization.TelephoneNumber = TbOrganizationTelephone.Text;
                 organization.Address = TbOrganizationAddress.Text;
+            }
+            else
+            {
+                organization = CbOrganizationName.SelectedItem as Organization;
             }
             DateTime? dateTimeOfWork = null;
             if (DpDateTimeOfWork.SelectedDate != null)
@@ -174,6 +199,7 @@ namespace TechnoShieldApp.Pages.Manager
                 AppData.Context.ServiceOfProductInOrder.Add(new ServiceOfProductInOrder
                 {
                     Product = item.Product,
+                    Count = item.Count,
                     Service = item.Service,
                     Order = order
                 });
@@ -201,10 +227,16 @@ namespace TechnoShieldApp.Pages.Manager
                 }
             }
             AppData.Context.SaveChanges();
+            MessageBox.Show("Заказ успешно создан\nВас перенаправит на страницу добалвения бригады для заказа", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
+            AppData.MainFrame.Navigate(new WorkerOfOrderPage(order));
         }
         private void TbMinutes_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = e.Key == Key.Space;
+            if(e.Key == Key.Enter)
+            {
+                TbProductPurchase_LostFocus(null, null);
+            }
         }
 
         private void TbHoursOrder_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -214,20 +246,24 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void CbOrganizationName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            SpOrganization.DataContext = CbOrganizationName.SelectedItem as Organization;
         }
 
         private void TbProductPurchase_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var product = (sender as TextBox).DataContext as Product;
+            var purchase = (sender as TextBox).DataContext as Purchase;
             try
             {
-                _listPurchase.FirstOrDefault(p => p.Product == product).Count = int.Parse((sender as TextBox).Text);
+                _listPurchase.FirstOrDefault(p => p.Product == purchase.Product).Count = int.Parse((sender as TextBox).Text);
+                var product = purchase.Product;
+                product.TotalPrice = _listProduct.FirstOrDefault(p => p == product).Price;
+                product.TotalPrice *= _listPurchase.FirstOrDefault(p => p.Product == purchase.Product).Count;
             }
             catch
             {
 
             }
+            SumTotalOrderPrice();
         }
 
         private void BtnAddToPurchase_Click(object sender, RoutedEventArgs e)
@@ -235,6 +271,7 @@ namespace TechnoShieldApp.Pages.Manager
             Product product = (sender as Button).DataContext as Product;
             if (_listPurchase.Where(p => p.Product == product).Count() == 0)
             {
+                product.TotalPrice = _listProduct.FirstOrDefault(p => p == product).Price;
                 _listPurchase.Add(new Purchase
                 {
                     Product = product,
@@ -244,10 +281,15 @@ namespace TechnoShieldApp.Pages.Manager
             else
             {
                 if (_listPurchase.FirstOrDefault(p => p.Product == product).Count + 1 <= 999)
+                {
                     _listPurchase.FirstOrDefault(p => p.Product == product).Count += 1;
+                    product.TotalPrice = _listProduct.FirstOrDefault(p => p == product).Price;
+                    product.TotalPrice *= _listPurchase.FirstOrDefault(p => p.Product == product).Count;
+                }
             }
             ICSelectedProducts.ItemsSource = null;
             ICSelectedProducts.ItemsSource = _listPurchase;
+            SumTotalOrderPrice();
         }
 
         private void TblDeleteProductFromOrder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -255,6 +297,7 @@ namespace TechnoShieldApp.Pages.Manager
             _listPurchase.Remove((sender as TextBlock).DataContext as Purchase);
             ICSelectedProducts.ItemsSource = null;
             ICSelectedProducts.ItemsSource = _listPurchase;
+            SumTotalOrderPrice();
         }
 
         private void TbSearchProduct_TextChanged(object sender, TextChangedEventArgs e)
@@ -269,6 +312,13 @@ namespace TechnoShieldApp.Pages.Manager
             _listServiceOfProductInOrder.RemoveAll(p => p.Service == (sender as Button).DataContext as Service);
             _listService.Add((sender as Button).DataContext as Service);
             UpdateServicesCollection();
+            SumTotalOrderPrice();
+        }
+
+        private void TbProductPurchase_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ICSelectedProducts.Items.Refresh();
+            SumTotalOrderPrice();
         }
     }
 }

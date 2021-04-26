@@ -15,6 +15,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel x:Name="SpOrganization" Margin="5">
             <TextBlock HorizontalAlignment="Center" Style="{StaticResource TbkBody}" FontSize="30">Заказчик</TextBlock>
@@ -153,10 +154,10 @@
                                                     <StackPanel VerticalAlignment="Bottom">
                                                         <Image Margin="5"  Height="80" Width="150" x:Name="ImgProduct" Source="{Binding Product.Photo, TargetNullValue= {StaticResource NullImage}}"></Image>
                                                         <TextBlock Height="100" Text="{Binding Product.Name}" Style="{StaticResource TbkBody}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
-                                                        <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Product.Price}"></TextBlock>
+                                                        <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Product.TotalPrice}"></TextBlock>
                                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                                             <TextBlock Style="{StaticResource TbkBody}">Количество:</TextBlock>
-                                                            <TextBox Width="50" TextAlignment="Center" MaxLength="3" HorizontalAlignment="Center" PreviewTextInput="TbHoursOrder_PreviewTextInput" PreviewKeyDown="TbMinutes_KeyDown" Text="{Binding Count}" Name="TbProductPurchase" TextChanged="TbProductPurchase_TextChanged"></TextBox>
+                                                            <TextBox LostFocus="TbProductPurchase_LostFocus" Width="50" TextAlignment="Center" MaxLength="3" HorizontalAlignment="Center" PreviewTextInput="TbHoursOrder_PreviewTextInput" PreviewKeyDown="TbMinutes_KeyDown" Text="{Binding Count}" Name="TbProductPurchase" TextChanged="TbProductPurchase_TextChanged"></TextBox>
                                                         </StackPanel>
                                                     </StackPanel>
                                                 </Grid>
@@ -170,5 +171,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource TbkBody}" Name="TbTotalPrice" HorizontalAlignment="Right" VerticalAlignment="Center">Общая цена заказа:</TextBlock>
     </Grid>
 </Page>
