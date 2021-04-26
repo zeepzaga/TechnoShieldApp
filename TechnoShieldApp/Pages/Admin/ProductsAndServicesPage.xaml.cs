@@ -173,7 +173,6 @@ namespace TechnoShieldApp.Pages.Admin
             AppData.Context.SaveChanges();
             (((sender as Button).Parent as StackPanel).Parent as Border).Visibility = Visibility.Collapsed;
         }
-
         private void TbSearhTypeOfService_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateListServce();           
