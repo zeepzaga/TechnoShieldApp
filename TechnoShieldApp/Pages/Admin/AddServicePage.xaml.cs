@@ -63,7 +63,6 @@ namespace TechnoShieldApp.Pages.Admin
             decimal _price = 0;
             if (!String.IsNullOrWhiteSpace(TbName.Text) || CbTypeOfService.SelectedIndex < 0)
             {
-                //ДОДЕЛАЙ ФОРЧ НА ДОБАВЕНИЕ НОВОЙ ПОДОБНОЙ СВЗЯИ У ТЕБЯ ЕСТЬ ТОЛЬКО ЕЁ ОТЧИЩЕНИЕ
                 foreach (var item in _listProduct)
                 {
                     var product = AppData.Context.Product.ToList().FirstOrDefault(p => p.TypeOfService == item.TypeOfService && p.Id == item.Id);
@@ -87,7 +86,7 @@ namespace TechnoShieldApp.Pages.Admin
                         AppData.Context.Service.Add(new Service
                         {
                             Name = TbName.Text,
-                            Price = decimal.TryParse(TbPrice.Text, out _price) == false ? 0 : _price,
+                            Price = decimal.TryParse(TbPrice.Text.Replace('.',','), out _price) == false ? 0 : _price,
                             TypeOfService = CbTypeOfService.SelectedItem as TypeOfService,
                             Description = TbDexription.Text,
                         });
@@ -103,7 +102,7 @@ namespace TechnoShieldApp.Pages.Admin
                 else
                 {
                     _service.Name = TbName.Text;
-                    _service.Price = decimal.TryParse(TbPrice.Text, out _price) == false ? 0 : _price;
+                    _service.Price = decimal.TryParse(TbPrice.Text.Replace('.',','), out _price) == false ? 0 : _price;
                     _service.TypeOfService = CbTypeOfService.SelectedItem as TypeOfService;
                     _service.Description = TbDexription.Text;
                     AppData.Context.SaveChanges();

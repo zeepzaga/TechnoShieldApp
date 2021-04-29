@@ -51,7 +51,7 @@ namespace TechnoShieldApp.Pages.Manager
         {
             if (MessageBox.Show("Отменить создание бригады?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                AppData.MainFrame.Navigate(new OrderDetailViewPage());
+                AppData.MainFrame.Navigate(new OrderDetailViewPage(_order));
             }
         }
 
@@ -63,7 +63,7 @@ namespace TechnoShieldApp.Pages.Manager
                 AppData.Context.SaveChanges();
             }
             MessageBox.Show("Бригада собрана", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
-            AppData.MainFrame.Navigate(new OrderDetailViewPage());
+            AppData.MainFrame.Navigate(new OrderDetailViewPage(_order));
         }
 
         private void CbRole_SelectionChanged(object sender, SelectionChangedEventArgs e)

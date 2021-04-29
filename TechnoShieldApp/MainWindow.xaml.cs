@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,8 +27,9 @@ namespace TechnoShieldApp
         public MainWindow()
         {
             InitializeComponent();
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
             AppData.MainFrame = MainFrame;
-            AppData.MainFrame.Navigate(new WorkerOfOrderPage(AppData.Context.Order.ToList().LastOrDefault()));
+            AppData.MainFrame.Navigate(new AutorizationPage());
         }
 
         private void MainFrame_ContentRendered(object sender, EventArgs e)

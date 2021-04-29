@@ -45,7 +45,7 @@
                                                 <DataTemplate>
                                                     <Border Padding="5" Margin="5" BorderBrush="Black" BorderThickness="1">
                                                         <Grid>
-                                                            <TextBlock Background="White" Style="{StaticResource TbkBody}" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5 0"  Foreground="Red" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown">X</TextBlock>
+                                                            <TextBlock Background="White" Style="{StaticResource TbkBody}" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5 0"  Foreground="Red" Name="TblDelete" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown">X</TextBlock>
                                                             <controls:ProductControl></controls:ProductControl>
                                                         </Grid>
                                                     </Border>

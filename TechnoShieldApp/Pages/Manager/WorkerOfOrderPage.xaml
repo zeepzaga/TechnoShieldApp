@@ -31,7 +31,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Background="Transparent" Name="BdWorkers" MouseDown="BdWorkers_MouseDown" AllowDrop="True">
-                        <TextBlock Style="{StaticResource TbkBody}" Text="{Binding Name}"></TextBlock>
+                        <TextBlock Style="{StaticResource TbkBody}" Text="{Binding FIOAndPosition}"></TextBlock>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -77,7 +77,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Background="Transparent" Name="BdSelectedWorkers" MouseDown="BdSelectedWorkers_MouseDown" AllowDrop="True">
-                        <TextBlock Style="{StaticResource TbkBody}" Text="{Binding Name}"></TextBlock>
+                        <TextBlock Style="{StaticResource TbkBody}" Text="{Binding FIOAndPosition}"></TextBlock>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>

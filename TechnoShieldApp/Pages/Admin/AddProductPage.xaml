@@ -23,8 +23,7 @@
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <TextBlock TextAlignment="Right" Width="125" Style="{StaticResource TbkBody}">Тип товара:</TextBlock>
-                        <ComboBox DisplayMemberPath="Name" Width="240" Name="CbTypeOfProduct"></ComboBox>
-                        <Button Width="50">+</Button>
+                        <ComboBox DisplayMemberPath="Name" IsEditable="True" IsTextSearchCaseSensitive="True" Width="300" Name="CbTypeOfProduct"></ComboBox>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <TextBlock TextAlignment="Right" Width="125" Style="{StaticResource TbkBody}">Цена:</TextBlock>

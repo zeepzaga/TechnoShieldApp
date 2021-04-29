@@ -11,9 +11,8 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="BtnProductsAndServices" Click="BtnProductsAndServices_Click" Width="250" Height="50">Товары и услуги</Button>
-            <Button x:Name="BtnOrders" Width="250" Click="BtnOrders_Click" Height="50">Записи</Button>
+            <Button x:Name="BtnOrders" Width="250" Click="BtnOrders_Click" Height="50">Заказы</Button>
             <Button x:Name="BtnWorkers" Width="250" Click="BtnWorkers_Click" Height="50">Работники</Button>
-            <Button x:Name="BtnStat" Width="250" Click="BtnStat_Click" Height="50">Статистика</Button>
         </StackPanel>
     </Grid>
 </Page>

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TechnoShieldApp.Entities;
+using TechnoShieldApp.Pages.Manager;
 
 namespace TechnoShieldApp.Pages.Admin
 {
@@ -33,7 +34,7 @@ namespace TechnoShieldApp.Pages.Admin
 
         private void BtnOrders_Click(object sender, RoutedEventArgs e)
         {
-
+            AppData.MainFrame.Navigate(new OrderListPage());
         }
 
         private void BtnWorkers_Click(object sender, RoutedEventArgs e)

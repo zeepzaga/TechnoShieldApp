@@ -8,7 +8,7 @@ namespace TechnoShieldApp.Entities
 {
     public partial class Product
     {
-        public int CountOnOrder { get; set;}
-        public decimal TotalPrice { get; set; }
+        public int CountOnOrder { get; set; }
+        
     }
 }

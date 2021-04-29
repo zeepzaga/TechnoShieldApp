@@ -72,7 +72,7 @@ namespace TechnoShieldApp.Pages.Admin
                         Description = String.IsNullOrWhiteSpace(TbDescription.Text) ? null : TbDescription.Text,
                         Name = TbName.Text,
                         TypeOfProduct = CbTypeOfProduct.SelectedItem as TypeOfProduct,
-                        Price = decimal.Parse(TbPrice.Text),
+                        Price = decimal.Parse(TbPrice.Text.Replace('.',',')),
                         Photo = _photo,
                         TypeOfService = CbTypeOfService.SelectedItem as TypeOfService != null ? CbTypeOfService.SelectedItem as TypeOfService : null
                     });
@@ -85,7 +85,7 @@ namespace TechnoShieldApp.Pages.Admin
                     _product.Description = String.IsNullOrWhiteSpace(TbDescription.Text) ? null : TbDescription.Text;
                     _product.Name = TbName.Text;
                     _product.TypeOfProduct = CbTypeOfProduct.SelectedItem as TypeOfProduct;
-                    _product.Price = decimal.Parse(TbPrice.Text);
+                    _product.Price = decimal.Parse(TbPrice.Text.Replace('.',','));
                     _product.Photo = _photo;
                     _product.TypeOfService = CbTypeOfService.SelectedItem as TypeOfService != null ? CbTypeOfService.SelectedItem as TypeOfService : null;
 

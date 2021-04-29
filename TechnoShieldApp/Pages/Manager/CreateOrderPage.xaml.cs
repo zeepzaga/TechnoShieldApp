@@ -26,10 +26,11 @@ namespace TechnoShieldApp.Pages.Manager
         private List<Product> _listProduct = new List<Product>();
         private List<Purchase> _listPurchase = new List<Purchase>();
         private List<ServiceOfProductInOrder> _listServiceOfProductInOrder = new List<ServiceOfProductInOrder>();
+        private List<ServiceOfProductInOrder> _listServiceOfProductInOrderDelete = new List<ServiceOfProductInOrder>();
         private decimal _totalOrderPrice = 0;
-        Order order = new Order();
+        Order _order = new Order();
 
-        public CreateOrderPage()
+        public CreateOrderPage(Order order)
         {
             InitializeComponent();
             DpDateTimeOfWork.DisplayDateStart = DateTime.Now;
@@ -41,6 +42,31 @@ namespace TechnoShieldApp.Pages.Manager
                 _listService = AppData.Context.Service.ToList();
                 _listProduct = AppData.Context.Product.ToList();
                 ICAllProducts.ItemsSource = _listProduct;
+                _order = order;
+                if (order != null)
+                {
+                    Title = "Редактирование заказа";
+                    CbOrganizationName.SelectedItem = _order.Organization;
+                    SpOrganization.IsEnabled = false;
+                    foreach (var item in _order.ServiceOfProductInOrder.GroupBy(p => p.Service))
+                    {
+                        _listSelectedService.Add(item.Key);
+                        _listService.Remove(item.Key);
+                    }
+                    _listServiceOfProductInOrder = _order.ServiceOfProductInOrder.ToList();
+                    foreach (var item in _order.Purchase)
+                    {
+                        _listPurchase.Add(new Purchase
+                        {
+                            Count = item.Count,
+                            Order = _order,
+                            Product = item.Product,
+                        });
+                    }
+                    ICSelectedProducts.ItemsSource = _listPurchase;
+                    UpdateServicesCollection();
+                    SumTotalOrderPrice();
+                }
             }
             catch
             {
@@ -56,7 +82,7 @@ namespace TechnoShieldApp.Pages.Manager
                 ICProduct.ItemsSource = null;
                 foreach (var item in _listProduct.Where(p => p.TypeOfService == (LbSelectedService.SelectedItem as Service).TypeOfService).ToList())
                 {
-                    ServiceOfProductInOrder serviceOfProductInOrder = _listServiceOfProductInOrder.FirstOrDefault(p => p.Service == LbSelectedService.SelectedItem as Service && p.Product.Id == item.Id);
+                    ServiceOfProductInOrder serviceOfProductInOrder = _listServiceOfProductInOrder.FirstOrDefault(p => p.Service == LbSelectedService.SelectedItem as Service && p.Product == item);
                     if (serviceOfProductInOrder != null)
                         item.CountOnOrder = serviceOfProductInOrder.Count;
                     else
@@ -97,7 +123,8 @@ namespace TechnoShieldApp.Pages.Manager
             }
             foreach (var item in _listServiceOfProductInOrder)
             {
-                _totalOrderPrice += item.Product.Price * item.Count;
+                if (item.Product != null)
+                    _totalOrderPrice += item.Product.Price * item.Count;
             }
             foreach (var item in _listPurchase)
             {
@@ -112,45 +139,39 @@ namespace TechnoShieldApp.Pages.Manager
             var product = (sender as TextBox).DataContext as Product;
             try
             {
-                ServiceOfProductInOrder serviceOfProductInOrder = _listServiceOfProductInOrder.FirstOrDefault(p => p.Product == product && p.Service == LbSelectedService.SelectedItem as Service);
-                if (serviceOfProductInOrder != null)
+                int count = 0;
+                ServiceOfProductInOrder serviceOfProductInOrder = _listServiceOfProductInOrder
+                    .FirstOrDefault(p => p.Product == product && p.Service == LbSelectedService.SelectedItem as Service);
+                int.TryParse((sender as TextBox).Text, out count);
+                if (count == 0 && serviceOfProductInOrder != null)
                 {
-                    serviceOfProductInOrder.Count = int.Parse((sender as TextBox).Text);
+                    _listServiceOfProductInOrder.Remove(serviceOfProductInOrder);
+                    _listServiceOfProductInOrderDelete.Add(serviceOfProductInOrder);
                 }
                 else
                 {
-                    _listServiceOfProductInOrder.Add(new ServiceOfProductInOrder
+                    if (serviceOfProductInOrder != null)
                     {
-                        Count = int.Parse((sender as TextBox).Text),
-                        Product = product,
-                        Service = LbSelectedService.SelectedItem as Service
-                    });
+                        serviceOfProductInOrder.Count = count;
+                    }
+                    else
+                    {
+                        _listServiceOfProductInOrder.Add(new ServiceOfProductInOrder
+                        {
+                            Count = int.Parse((sender as TextBox).Text),
+                            Product = product,
+                            Service = LbSelectedService.SelectedItem as Service
+                        });
+                    }
+                    if (_listServiceOfProductInOrderDelete
+                        .FirstOrDefault(p => p.Product == product && p.Service == LbSelectedService.SelectedItem as Service) != null)
+                    {
+                        _listServiceOfProductInOrderDelete.Remove(_listServiceOfProductInOrderDelete
+                        .FirstOrDefault(p => p.Product == product && p.Service == LbSelectedService.SelectedItem as Service));
+                    }
                 }
-                SumTotalOrderPrice();
 
-                //product.CountOnOrder = int.Parse((sender as TextBox).Text);
-                //var productOnService = _listServiceOfProductInOrder.Where(p => p.Product.Id == product.Id && p.Service == LbSelectedService.SelectedItem as Service).ToList();
-                //if (productOnService.Count < product.CountOnOrder)
-                //{
-                //    var diff = product.CountOnOrder - productOnService.Count;
-                //    for (int i = 0; i < diff; i++)
-                //    {
-                //        _listServiceOfProductInOrder.Add(new ServiceOfProductInOrder
-                //        {
-                //            Service = LbSelectedService.SelectedItem as Service,
-                //            Product = product,
-                //        });
-                //    }
-                //}
-                //else if (productOnService.Count > product.CountOnOrder)
-                //{
-                //    var diff = productOnService.Count - product.CountOnOrder;
-                //    for (int i = 0; i < diff; i++)
-                //    {
-                //        _listServiceOfProductInOrder.Remove(_listServiceOfProductInOrder.FirstOrDefault(p => p.Service == LbSelectedService.SelectedItem as Service
-                //         && p.Product == (sender as TextBox).DataContext as Product));
-                //    }
-                //}
+                SumTotalOrderPrice();
             }
             catch
             {
@@ -186,54 +207,128 @@ namespace TechnoShieldApp.Pages.Manager
             if (DpDateTimeOfWork.SelectedDate != null)
                 dateTimeOfWork = new DateTime(DpDateTimeOfWork.SelectedDate.Value.Year, DpDateTimeOfWork.SelectedDate.Value.Month,
                     DpDateTimeOfWork.SelectedDate.Value.Day, Convert.ToInt32(TbHoursOrder.Text), int.Parse(TbMinutes.Text), 0);
-
-            Order order = AppData.Context.Order.Add(new Order
+            if (_order == null)
             {
-                StatusOfOrderId = 1,
-                DateTimeOfCreate = DateTime.Now,
-                Organization = organization,
-                DateTimeOfWork = dateTimeOfWork,
-            });
-            foreach (var item in _listServiceOfProductInOrder)
-            {
-                AppData.Context.ServiceOfProductInOrder.Add(new ServiceOfProductInOrder
+                Order order = AppData.Context.Order.Add(new Order
                 {
-                    Product = item.Product,
-                    Count = item.Count,
-                    Service = item.Service,
-                    Order = order
+                    StatusOfOrderId = 1,
+                    DateTimeOfCreate = DateTime.Now,
+                    Organization = organization,
+                    DateTimeOfWork = dateTimeOfWork,
                 });
-            }
-            foreach (var item in _listPurchase)
-            {
-                AppData.Context.Purchase.Add(new Purchase
-                {
-                    Product = item.Product,
-                    Count = item.Count,
-                    Order = order
-                });
-            }
-            foreach (var item in _listSelectedService)
-            {
-                if (_listServiceOfProductInOrder.FirstOrDefault(p => p.Service == item) == null)
+                foreach (var item in _listServiceOfProductInOrder)
                 {
                     AppData.Context.ServiceOfProductInOrder.Add(new ServiceOfProductInOrder
                     {
-                        Product = null,
-                        Count = 0,
-                        Order = order,
-                        Service = item,
+                        Product = item.Product,
+                        Count = item.Count,
+                        Service = item.Service,
+                        Order = order
                     });
                 }
+                foreach (var item in _listPurchase)
+                {
+                    AppData.Context.Purchase.Add(new Purchase
+                    {
+                        Product = item.Product,
+                        Count = item.Count,
+                        Order = order
+                    });
+                }
+                foreach (var item in _listSelectedService)
+                {
+                    if (_listServiceOfProductInOrder.FirstOrDefault(p => p.Service == item) == null)
+                    {
+                        AppData.Context.ServiceOfProductInOrder.Add(new ServiceOfProductInOrder
+                        {
+                            Product = null,
+                            Count = 0,
+                            Order = order,
+                            Service = item,
+                        });
+                    }
+                }
+                AppData.Context.SaveChanges();
+                MessageBox.Show("Заказ успешно создан\nВас перенаправит на страницу добалвения бригады для заказа", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppData.MainFrame.Navigate(new WorkerOfOrderPage(order));
             }
-            AppData.Context.SaveChanges();
-            MessageBox.Show("Заказ успешно создан\nВас перенаправит на страницу добалвения бригады для заказа", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
-            AppData.MainFrame.Navigate(new WorkerOfOrderPage(order));
+            else
+            {
+                foreach (var item in _listServiceOfProductInOrder)
+                {
+                    ServiceOfProductInOrder serviceOfProductInOrder
+                        = AppData.Context.ServiceOfProductInOrder.ToList()
+                                            .FirstOrDefault(p => p.Service == item.Service
+                                            && p.Product == item.Product);
+                    if (serviceOfProductInOrder != null)
+                    {
+                        serviceOfProductInOrder.Count = item.Count;
+                        AppData.Context.SaveChanges();
+                    }
+                    else
+                    {
+                        AppData.Context.ServiceOfProductInOrder.Add(new ServiceOfProductInOrder
+                        {
+                            Service = item.Service,
+                            Count = item.Count,
+                            Order = _order,
+                            Product = item.Product,
+                        });
+                        AppData.Context.SaveChanges();
+                    }
+                }
+                foreach (var item in _listServiceOfProductInOrderDelete)
+                {
+                    ServiceOfProductInOrder serviceOfProductInOrder =
+                        AppData.Context.ServiceOfProductInOrder.ToList()
+                        .FirstOrDefault(p => p.Product == item.Product && p.Service == item.Service);
+                    if (serviceOfProductInOrder != null)
+                    {
+                        AppData.Context.ServiceOfProductInOrder.Remove(serviceOfProductInOrder);
+                        AppData.Context.SaveChanges();
+                    }
+                }
+                foreach (var item in _listPurchase)
+                {
+                    Purchase purchase = AppData.Context.Purchase.ToList()
+                        .FirstOrDefault(p => p.Product == item.Product);
+                    if (purchase != null)
+                    {
+                        purchase.Count = item.Count;
+                        AppData.Context.SaveChanges();
+                    }
+                    else
+                    {
+                        AppData.Context.Purchase.Add(new Purchase
+                        {
+                            Count = item.Count,
+                            Order = item.Order,
+                            Product = item.Product
+                        });
+                        AppData.Context.SaveChanges();
+                    }
+                }
+                List<Purchase> purchasesForDelete = new List<Purchase>();
+                foreach (var item in AppData.Context.Purchase.ToList().Where(p=>p.Order == _order))
+                {
+                    if (_listPurchase.FirstOrDefault(p => p.Product == item.Product) == null)
+                        purchasesForDelete.Add(item);
+                }
+                foreach (var item in purchasesForDelete)
+                {
+                    AppData.Context.Purchase.Remove(item);
+                    AppData.Context.SaveChanges();
+                }
+                _order.DateTimeOfWork = dateTimeOfWork;
+                AppData.Context.SaveChanges();
+                AppData.MainFrame.GoBack();
+            }
+
         }
         private void TbMinutes_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = e.Key == Key.Space;
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 TbProductPurchase_LostFocus(null, null);
             }
@@ -255,9 +350,6 @@ namespace TechnoShieldApp.Pages.Manager
             try
             {
                 _listPurchase.FirstOrDefault(p => p.Product == purchase.Product).Count = int.Parse((sender as TextBox).Text);
-                var product = purchase.Product;
-                product.TotalPrice = _listProduct.FirstOrDefault(p => p == product).Price;
-                product.TotalPrice *= _listPurchase.FirstOrDefault(p => p.Product == purchase.Product).Count;
             }
             catch
             {
@@ -271,7 +363,6 @@ namespace TechnoShieldApp.Pages.Manager
             Product product = (sender as Button).DataContext as Product;
             if (_listPurchase.Where(p => p.Product == product).Count() == 0)
             {
-                product.TotalPrice = _listProduct.FirstOrDefault(p => p == product).Price;
                 _listPurchase.Add(new Purchase
                 {
                     Product = product,
@@ -283,8 +374,6 @@ namespace TechnoShieldApp.Pages.Manager
                 if (_listPurchase.FirstOrDefault(p => p.Product == product).Count + 1 <= 999)
                 {
                     _listPurchase.FirstOrDefault(p => p.Product == product).Count += 1;
-                    product.TotalPrice = _listProduct.FirstOrDefault(p => p == product).Price;
-                    product.TotalPrice *= _listPurchase.FirstOrDefault(p => p.Product == product).Count;
                 }
             }
             ICSelectedProducts.ItemsSource = null;
@@ -317,6 +406,17 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void TbProductPurchase_LostFocus(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Purchase purchase = (sender as TextBox).DataContext as Purchase;
+                if (purchase.Count == 0)
+                {
+                    _listPurchase.Remove(purchase);
+                }
+            }
+            catch
+            {
+            }
             ICSelectedProducts.Items.Refresh();
             SumTotalOrderPrice();
         }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TechnoShieldApp.Entities;
 
 namespace TechnoShieldApp.Pages.Manager
 {
@@ -20,9 +21,35 @@ namespace TechnoShieldApp.Pages.Manager
     /// </summary>
     public partial class OrderDetailViewPage : Page
     {
-        public OrderDetailViewPage()
+        Order _order;
+        public OrderDetailViewPage(Order order)
         {
             InitializeComponent();
+            _order = order;
+            UpdateData();
+        }
+
+        private void UpdateData()
+        {
+            DataContext = null;
+            DataContext = _order;
+            CbStatusOfOrder.ItemsSource = AppData.Context.StatusOfOrder.ToList();
+            CbStatusOfOrder.SelectedItem = _order.StatusOfOrder;
+        }
+
+        private void BtnEditOrder_Click(object sender, RoutedEventArgs e)
+        {
+            AppData.MainFrame.Navigate(new CreateOrderPage(_order));
+        }
+
+        private void BtnEditWorkers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateData();
         }
     }
 }

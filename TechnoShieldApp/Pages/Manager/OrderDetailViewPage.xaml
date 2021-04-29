@@ -5,10 +5,142 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TechnoShieldApp.Pages.Manager"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="OrderDetailViewPage">
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="Подробная информация о заказе" Loaded="Page_Loaded">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition Height="{Binding WorkerGridLength}"></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Background="Black" Grid.Row="1"></Grid>
+        <Grid Background="Black" Grid.Row="3"></Grid>
+        <Grid Background="Black" Grid.Row="5"></Grid>
+        <StackPanel>
+            <TextBlock Style="{StaticResource TbkBody}" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center">Основная ифнормация</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="340" TextAlignment="Right" Style="{StaticResource TbkBody}" FontWeight="Bold">Оргнизация-зазчик:</TextBlock>
+                <TextBlock Width="250" Style="{StaticResource TbkBody}" Text="{Binding Organization.Name}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="340" TextAlignment="Right" Style="{StaticResource TbkBody}" FontWeight="Bold">Дата создания заказа:</TextBlock>
+                <TextBlock Width="250" Style="{StaticResource TbkBody}" Text="{Binding DateTimeOfCreate, StringFormat=dd.MM.yyyy HH:MM}"></TextBlock>
+            </StackPanel>
+            <StackPanel Visibility="{Binding DateStartWorkVisible}" Orientation="Horizontal">
+                <TextBlock Width="340" TextAlignment="Right" Style="{StaticResource TbkBody}" FontWeight="Bold">Дата и время выполнения заказа:</TextBlock>
+                <TextBlock Width="250" Style="{StaticResource TbkBody}" Text="{Binding DateTimeOfCreate, StringFormat=dd.MM.yyyy HH:MM}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="340" TextAlignment="Right" Style="{StaticResource TbkBody}" FontWeight="Bold">Статус заказа:</TextBlock>
+                <StackPanel>
+                    <ComboBox DisplayMemberPath="Name" Name="CbStatusOfOrder" Width="250"></ComboBox>
+                    <Button Width="250">Сохранить статус</Button>
+                </StackPanel>
+                <TextBlock TextAlignment="Right" Style="{StaticResource TbkBody}" FontWeight="Bold">Дата выполнения заказа:</TextBlock>
+                <DatePicker IsEnabled="False" Name="DpDatOfEnd" Width="250"></DatePicker>
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" HorizontalAlignment="Center" FontSize="30">Информация об услугах и покупках</TextBlock>
+            <TabControl  Grid.Row="1">
+                <TabItem Visibility="Visible">
+                    <TabItem.Header>
+                        <TextBlock Style="{StaticResource TbkTriggered}">Услуги</TextBlock>
+                    </TabItem.Header>
+                                <ScrollViewer Margin="5">
+                    <ItemsControl Margin="5" ItemsSource="{Binding OrderServiceList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                    <Expander>
+                                        <Expander.Header>
+                                            <TextBlock Style="{StaticResource TbkBody}" TextWrapping="Wrap" Text="{Binding Service.Name}"></TextBlock>
+                                        </Expander.Header>
+                                        <ItemsControl ItemsSource="{Binding ListOfProduct}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Style="{StaticResource TbkBody}">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} ({1})">
+                                                                <Binding Path="Product.Name"></Binding>
+                                                                <Binding Path="CountInService"></Binding>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                        <TextBlock.ToolTip>
+                                                            <ToolTip>
+                                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                    <Image Margin="5"  Height="150" HorizontalAlignment="Center" x:Name="ImgProduct" Source="{Binding Product.Photo, TargetNullValue= {StaticResource NullImage}, IsAsync=True}"></Image>
+                                                                    <TextBlock  Height="100" Width="200" Text="{Binding Product.Name}" Style="{StaticResource TbkBody}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                                                                </StackPanel>
+                                                            </ToolTip>
+                                                        </TextBlock.ToolTip>
+                                             </TextBlock>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Expander>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                                </ScrollViewer>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Style="{StaticResource TbkTriggered}">Товары</TextBlock>
+                    </TabItem.Header>
+                    <ScrollViewer>
+                        <ItemsControl Margin="5" ItemsSource="{Binding Purchase}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="Wrap" Style="{StaticResource TbkBody}">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} ({1})">
+                                                <Binding Path="Product.Name"></Binding>
+                                                <Binding Path="Count"></Binding>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                        <TextBlock.ToolTip>
+                                            <ToolTip>
+                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <Image Margin="5" Stretch="Uniform" Height="200" Width="150" HorizontalAlignment="Center" x:Name="ImgProduct" Source="{Binding Product.Photo, TargetNullValue= {StaticResource NullImage}, IsAsync=True}"></Image>
+                                                    <TextBlock  Height="100" Width="200" Text="{Binding Product.Name}" Style="{StaticResource TbkBody}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                                                </StackPanel>
+                                            </ToolTip>
+                                        </TextBlock.ToolTip>
+                            </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" HorizontalAlignment="Center" FontSize="30">Информация об исполнителях закза</TextBlock>
+            <ScrollViewer Margin="5" Grid.Row="1">
+                <ItemsControl  ItemsSource="{Binding Worker}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource TbkBody}" Text="{Binding FIOAndPosition}"></TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button x:Name="BtnEditWorkers" Click="BtnEditWorkers_Click" Grid.Row="2" HorizontalAlignment="Right" Width="250">Редактировать бригаду</Button>
+        </Grid>
+        <Button x:Name="BtnEditOrder" Click="BtnEditOrder_Click" Grid.Row="6" Width="250" HorizontalAlignment="Right">Редактировать заказ</Button>
     </Grid>
 </Page>
