@@ -41,8 +41,8 @@
                     <ComboBox DisplayMemberPath="Name" Name="CbStatusOfOrder" Width="250"></ComboBox>
                     <Button Width="250">Сохранить статус</Button>
                 </StackPanel>
-                <TextBlock TextAlignment="Right" Style="{StaticResource TbkBody}" FontWeight="Bold">Дата выполнения заказа:</TextBlock>
-                <DatePicker IsEnabled="False" Name="DpDatOfEnd" Width="250"></DatePicker>
+                <TextBlock VerticalAlignment="Top" TextAlignment="Right" Style="{StaticResource TbkBody}" FontWeight="Bold">Дата выполнения заказа:</TextBlock>
+                <DatePicker VerticalAlignment="Top" IsEnabled="False" Name="DpDatOfEnd" Width="250"></DatePicker>
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="2">

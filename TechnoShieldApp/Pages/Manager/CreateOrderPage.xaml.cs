@@ -302,7 +302,7 @@ namespace TechnoShieldApp.Pages.Manager
                         AppData.Context.Purchase.Add(new Purchase
                         {
                             Count = item.Count,
-                            Order = item.Order,
+                            Order = _order,
                             Product = item.Product
                         });
                         AppData.Context.SaveChanges();
