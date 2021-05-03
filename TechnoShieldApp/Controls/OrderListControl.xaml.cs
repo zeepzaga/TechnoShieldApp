@@ -31,5 +31,13 @@ namespace TechnoShieldApp.Controls
         {
             AppData.MainFrame.Navigate(new OrderDetailViewPage((sender as Button).DataContext as Order));
         }
+
+        private void MainGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            TblOrganization.Width = (sender as Grid).ActualWidth - 1010;
+            if (MainGrid.ActualWidth < 1201) TblOrganization.Width += 130;
+            else if (MainGrid.ActualWidth < 1310) TblOrganization.Width += 100;
+            else if (MainGrid.ActualWidth < 1340) TblOrganization.Width += 80;
+        }
     }
 }

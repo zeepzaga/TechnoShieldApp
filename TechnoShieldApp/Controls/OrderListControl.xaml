@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TechnoShieldApp.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1200">
-    <Grid>
+    <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="1"></ColumnDefinition>
@@ -18,14 +18,16 @@
             <RowDefinition Height="1"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Margin="30 0 5 5" VerticalAlignment="Top" >
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{StaticResource TbkBody}">Организация-заказчик:</TextBlock>
-                <TextBlock VerticalAlignment="Top" Style="{StaticResource TbkBody}" Text="{Binding Organization.Name}" TextWrapping="Wrap"></TextBlock>
-            </StackPanel>
         </StackPanel>
         <Grid Grid.Row="3" Grid.ColumnSpan="4" Background="Black"></Grid>
         <Grid Grid.RowSpan="3" Grid.Column="1" Background="Black"></Grid>
-        <Expander Grid.Row="1" Margin="5" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
+        <Expander  Grid.Row="1" Margin="5" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
+            <Expander.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock  Style="{StaticResource TbkBody}">Организация-заказчик:</TextBlock>
+                    <TextBlock x:Name="TblOrganization" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource TbkBody}" Text="{Binding Organization.Name}" TextWrapping="Wrap"></TextBlock>
+                </StackPanel>
+            </Expander.Header>
             <Grid Margin="20 5 5 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -100,10 +102,10 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <Grid Visibility="{Binding Visibility}" Margin="5 0 5 -11" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Grid.Row="5" Background="White">
-                <Expander>
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource TbkBody}">Бригада рабочих</TextBlock>
-                    </Expander.Header>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock Style="{StaticResource TbkBody}">Бригада рабочих</TextBlock>
+                        </Expander.Header>
                         <ItemsControl Margin="50 -5 5 5" ItemsSource="{Binding Worker}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -111,7 +113,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                </Expander>
+                    </Expander>
                 </Grid>
             </Grid>
         </Expander>

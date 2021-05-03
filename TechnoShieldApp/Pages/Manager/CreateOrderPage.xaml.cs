@@ -250,7 +250,7 @@ namespace TechnoShieldApp.Pages.Manager
                 }
                 AppData.Context.SaveChanges();
                 MessageBox.Show("Заказ успешно создан\nВас перенаправит на страницу добалвения бригады для заказа", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
-                AppData.MainFrame.Navigate(new WorkerOfOrderPage(order));
+                AppData.MainFrame.Navigate(new OrderDetailViewPage(_order));
             }
             else
             {

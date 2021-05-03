@@ -49,9 +49,9 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Отменить создание бригады?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Отменить дейсвия?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                AppData.MainFrame.Navigate(new OrderDetailViewPage(_order));
+                AppData.MainFrame.GoBack();
             }
         }
 
@@ -59,11 +59,30 @@ namespace TechnoShieldApp.Pages.Manager
         {
             foreach (var item in _listSelectedWorker)
             {
-                _order.Worker.Add(item);
-                AppData.Context.SaveChanges();
+                if (_order.Worker.Count != 0)
+                {
+                    if (_order.Worker.ToList().FirstOrDefault(p => p == item) != null)
+                    {
+                        _order.Worker.Add(item);
+                        AppData.Context.SaveChanges();
+                    }
+                }
+                else
+                {
+                    _order.Worker.Add(item);
+                    AppData.Context.SaveChanges();
+                }
+            }
+            foreach (var item in _listWorkers)
+            {
+                if (_order.Worker.ToList().FirstOrDefault(p => p == item) != null)
+                {
+                    _order.Worker.Remove(item);
+                    AppData.Context.SaveChanges();
+                }
             }
             MessageBox.Show("Бригада собрана", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
-            AppData.MainFrame.Navigate(new OrderDetailViewPage(_order));
+            AppData.MainFrame.GoBack();
         }
 
         private void CbRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -92,16 +111,17 @@ namespace TechnoShieldApp.Pages.Manager
         }
         private void UpdateListViews()
         {
+            var searchList = _listWorkers;
+            var searchSelectedList = _listSelectedWorker;
             LVWorkers.ItemsSource = null;
             LvSelectedWorkers.ItemsSource = null;
             if (CbRole.SelectedIndex > 0)
             {
-                LVWorkers.ItemsSource = _listWorkers.Where(p => p.Role == CbRole.SelectedItem as Role).ToList().OrderBy(p => p.Id);
-                LvSelectedWorkers.ItemsSource = _listSelectedWorker.Where(p => p.Role == CbRole.SelectedItem as Role).ToList();
-                return;
+                searchList = _listWorkers.Where(p => p.Role == CbRole.SelectedItem as Role).ToList().OrderBy(p => p.Id).ToList();
+                searchSelectedList = _listSelectedWorker.Where(p => p.Role == CbRole.SelectedItem as Role).ToList();
             }
-            LVWorkers.ItemsSource = _listWorkers.OrderBy(p => p.Id);
-            LvSelectedWorkers.ItemsSource = _listSelectedWorker;
+            LVWorkers.ItemsSource = searchList.Where(p=>p.FIO.ToLower().Contains(TbFio.Text.ToLower())).ToList();
+            LvSelectedWorkers.ItemsSource = searchSelectedList;
         }
 
         private void LV_MouseDow(object sender, ListView LV)
@@ -159,6 +179,11 @@ namespace TechnoShieldApp.Pages.Manager
         private void BdSelectedWorkers_MouseDown(object sender, MouseButtonEventArgs e)
         {
             LV_MouseDow(sender, LvSelectedWorkers);
+        }
+
+        private void TbFio_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateListViews();
         }
     }
 }

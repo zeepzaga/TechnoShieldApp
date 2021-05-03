@@ -19,7 +19,7 @@
                 <PasswordBox x:Name="PbPassword" Width="170"></PasswordBox>
             </StackPanel>
             <CheckBox x:Name="ChbIsRemember" Content="Запомнить меня" FontSize="20" HorizontalAlignment="Right"></CheckBox>
-            <Button x:Name="BtnLogin" Click="BtnLogin_Click" HorizontalAlignment="Right" Width="250">Войти</Button>
+            <Button x:Name="BtnLogin" IsDefault="True" Click="BtnLogin_Click" HorizontalAlignment="Right" Width="250">Войти</Button>
         </StackPanel>
     </Grid>
 </Page>

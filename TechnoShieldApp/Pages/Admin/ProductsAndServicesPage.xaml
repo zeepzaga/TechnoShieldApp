@@ -151,7 +151,7 @@
                                                     <DataTemplate>
                                                         <Border Margin="5" BorderBrush="Black" BorderThickness="1" Height="400" Width="272">
                                                             <StackPanel VerticalAlignment="Bottom">
-                                                                <Image Margin="5"  Height="200" Width="300" HorizontalAlignment="Center" x:Name="ImgProduct" Source="{Binding Photo, TargetNullValue= {StaticResource NullImage}, IsAsync=True}"></Image>
+                                                                <Image Margin="5"  Height="200" Width="300" HorizontalAlignment="Center" x:Name="ImgProduct" Source="{Binding Photo, TargetNullValue= {StaticResource NullImage}}"></Image>
                                                                 <TextBlock Height="100" Text="{Binding Name}" Style="{StaticResource TbkBody}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
                                                                 <TextBlock Style="{StaticResource TbkBody}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Price}"></TextBlock>
                                                                 <Button VerticalAlignment="Bottom" Width="auto" Name="BtnDeleteproductOnService" Click="BtnDeleteproductOnService_Click">Удалить из типа</Button>

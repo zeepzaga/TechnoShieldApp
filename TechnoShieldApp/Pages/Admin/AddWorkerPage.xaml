@@ -1,0 +1,62 @@
+﻿<Page x:Class="TechnoShieldApp.Pages.Admin.AddWorkerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TechnoShieldApp.Pages.Admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="AddWorkerPage">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Style="{StaticResource TbkBody}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center">Основная информация</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="110" TextAlignment="Right" Style="{StaticResource TbkBody}">Фамилия:</TextBlock>
+                    <TextBox x:Name="TbLastName" Text="{Binding LastName}" Width="200"></TextBox>
+                    <TextBlock Width="180" TextAlignment="Right" Style="{StaticResource TbkBody}">Имя:</TextBlock>
+                    <TextBox x:Name="TbName" Text="{Binding Name}" Width="200"></TextBox>
+                    <TextBlock Width="145" TextAlignment="Right" Style="{StaticResource TbkBody}">Отчество:</TextBlock>
+                    <TextBox x:Name="TbPatronymic" Text="{Binding Patronymic}" Width="200"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="110" TextAlignment="Right" Style="{StaticResource TbkBody}">Паспорт:</TextBlock>
+                    <TextBox MaxLength="10" x:Name="TbPasport" Text="{Binding Passport}" Width="200"></TextBox>
+                    <TextBlock Width="180" TextAlignment="Right" Style="{StaticResource TbkBody}">Номер телефона:</TextBlock>
+                    <TextBox MaxLength="13" x:Name="TbTelephoneNumber" Text="{Binding TelephoneNumber}" Width="200"></TextBox>
+                    <TextBlock Width="145" TextAlignment="Right" Style="{StaticResource TbkBody}">Номер СНИЛС:</TextBlock>
+                    <TextBox MaxLength="14" x:Name="TbPIPN" Text="{Binding PIPN}" Width="200"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="110" TextAlignment="Right" Style="{StaticResource TbkBody}">Должность:</TextBlock>
+                    <ComboBox SelectionChanged="CbRole_SelectionChanged" Name="CbRole" DisplayMemberPath="Name" Width="200"></ComboBox>
+                    <TextBlock Style="{StaticResource TbkBody}">Адрес:</TextBlock>
+                    <TextBox x:Name="TbAddress" Text="{Binding Address}" Width="684"></TextBox>
+                </StackPanel>
+                <StackPanel x:Name="SpUser" IsEnabled="False">
+                    <TextBlock Style="{StaticResource TbkBody}" FontSize="30" FontWeight="Bold" Margin="5 5 5 0">Аккаунт</TextBlock>
+                    <TextBlock Style="{StaticResource TbkBody}" HorizontalAlignment="Left" FontStyle="Italic" TextWrapping="Wrap" Width="400" Margin="5 0 5 5">Системой могут пользоваться только менеджер и администратор</TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock Width="80" TextAlignment="Right" Style="{StaticResource TbkBody}">Логин:</TextBlock>
+                        <TextBox MaxLength="50" Text="{Binding User.Login}" x:Name="TbLogin" Width="200"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock Width="80" TextAlignment="Right" Style="{StaticResource TbkBody}">Пароль:</TextBlock>
+                        <Grid>
+                            <TextBox MaxLength="50" Text="{Binding User.Password}" x:Name="TbPassword" Width="200"></TextBox>
+                            <PasswordBox MaxLength="50" x:Name="PbPassword" Width="200"></PasswordBox>
+                        </Grid>
+                        <Viewbox MaxHeight="34">
+                            <CheckBox x:Name="ChbShowPass" Checked="ChbShowPass_Checked" Unchecked="ChbShowPass_Checked" FontSize="21" HorizontalAlignment="Left">Показать пароль</CheckBox>
+                        </Viewbox>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button x:Name="BtnCancel" Click="BtnCancel_Click">Отмена</Button>
+                <Button x:Name="BtnSave" Click="BtnSave_Click" Width="200">Соханить</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

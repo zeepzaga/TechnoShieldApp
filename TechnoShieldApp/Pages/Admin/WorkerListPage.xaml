@@ -1,0 +1,47 @@
+﻿<Page x:Class="TechnoShieldApp.Pages.Admin.WorkerListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TechnoShieldApp.Pages.Admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1200"
+      Title="WorkerListPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TbkBody}">ФИО:</TextBlock>
+            <TextBox x:Name="TbFio" TextChanged="TbFio_TextChanged" Width="250"></TextBox>
+            <TextBlock Style="{StaticResource TbkBody}">Должность</TextBlock>
+            <ComboBox SelectedIndex="0" DisplayMemberPath="Name" Name="CbRole" Width="250" SelectionChanged="CbRole_SelectionChanged"></ComboBox>
+            <Button x:Name="BtnClearSearch" Click="BtnClearSearch_Click" Width="220">Сбросить параметры</Button>
+            <Button x:Name="BtnAddWorker" Click="BtnAddWorker_Click" Width="220">Добавить работника</Button>
+        </StackPanel>
+        <DataGrid Grid.Row="1" x:Name="DgWorkers">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО Работника" Binding="{Binding FIO}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Role.Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Номер телефона" Binding="{Binding TelephoneNumber}" Width="*"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="auto" Click="BtnAboutWorker_Click" x:Name="BtnAboutWorker">Подробнее</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="auto" x:Name="BtnDelete" Click="BtnDelete_Click">Удалить работника</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

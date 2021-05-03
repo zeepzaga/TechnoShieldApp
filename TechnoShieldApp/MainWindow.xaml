@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TechnoShieldApp"
         mc:Ignorable="d"
-        Title="{Binding ElementName=MainFrame,Path=Content.Title,StringFormat={}ТЕХНО-ЩИТ | {0}}" Height="800" Width="1200" MinHeight="800" MinWidth="1200" Icon="thsh.ico">
+        Title="{Binding ElementName=MainFrame,Path=Content.Title,StringFormat={}ТЕХНО-ЩИТ | {0}}" Height="800" Width="1200" MinHeight="800" MinWidth="1200" Icon="thsh.ico" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>

@@ -16,6 +16,13 @@ namespace TechnoShieldApp.Entities
                 return $"{LastName} {Name} {Patronymic} ({Role.Name})";
             }
         }
-       
+        public string FIO
+        {
+            get
+            {
+                return $"{LastName} {Name} {Patronymic}";
+            }
+        }
+
     }
 }

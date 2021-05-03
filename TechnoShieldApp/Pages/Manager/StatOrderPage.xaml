@@ -1,0 +1,82 @@
+﻿<Page x:Class="TechnoShieldApp.Pages.Manager.StatOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TechnoShieldApp.Pages.Manager"
+      xmlns:charts="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="Статистика заказов">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource TbkBody}">С</TextBlock>
+            <DatePicker Name="DpStart"></DatePicker>
+            <TextBlock Style="{StaticResource TbkBody}">По</TextBlock>
+            <DatePicker Name="DpEnd"></DatePicker>
+            <TextBlock Style="{StaticResource TbkBody}">Организация:</TextBlock>
+            <ComboBox Width="250" DisplayMemberPath="Name" Name="CbOrganization"></ComboBox>
+            <Button x:Name="BtnCreateChart" Click="BtnCreateChart_Click" Width="auto">Составить график</Button>
+            <Button x:Name="BtnClearParam" Click="BtnClearParam_Click" Width="auto">Сбросить параметры</Button>
+        </StackPanel>
+        <Grid Background="Black" Grid.Row="1"></Grid>
+        <TabControl Grid.Row="2">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TbkTriggered}">Статистика товаров</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <CheckBox x:Name="ChbServicePlus" Click="ChbServicePlus_Click">
+                        <TextBlock Style="{StaticResource TbkBody}">Учитывать услуги</TextBlock>
+                    </CheckBox>
+                    <Grid Grid.Row="1" Name="GridChartProduct">
+                        <TextBlock Style="{StaticResource TbkBody}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="75">Данные не найдны</TextBlock>
+                        <WindowsFormsHost>
+                            <charts:Chart  x:Name="ChartProduct">
+                            </charts:Chart>
+                        </WindowsFormsHost>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TbkTriggered}">Статистика по заказам</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TbkBody}">Вид графика:</TextBlock>
+                        <RadioButton x:Name="RBtnOrderDay" VerticalAlignment="Center" Click="RadioButtonClick">По дням</RadioButton>
+                        <RadioButton Click="RadioButtonClick" x:Name="RBtnOrderMonth" VerticalAlignment="Center">По месяцам</RadioButton>
+                        <RadioButton IsChecked="True" Click="RadioButtonClick" x:Name="RbtnOrderYear" VerticalAlignment="Center">По годам</RadioButton>
+                    </StackPanel>
+                    <Grid Grid.Row="1" Name="GridChartOrder">
+                        <TextBlock Style="{StaticResource TbkBody}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="75">Данные не найдны</TextBlock>
+                        <WindowsFormsHost>
+                            <charts:Chart x:Name="ChartOrder">
+                            </charts:Chart>
+                        </WindowsFormsHost>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+            <Button Grid.Row="3" Width="200" HorizontalAlignment="Right" Name="BtnPrintStatd" Click="BtnPrintStatd_Click">Печать статистики</Button>
+    </Grid>
+</Page>

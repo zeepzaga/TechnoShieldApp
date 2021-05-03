@@ -31,7 +31,7 @@
                         <TextBlock Style="{StaticResource TbkBody}">Конец периода:</TextBlock>
                         <DatePicker Name="DpEnd"></DatePicker>
                         <TextBlock Style="{StaticResource TbkBody}">Организация:</TextBlock>
-                        <TextBox x:Name="TbCompanyName" Width="150"></TextBox>
+                        <ComboBox DisplayMemberPath="Name" x:Name="CbOrganization" Width="185"></ComboBox>
                         <Button Width="50" VerticalAlignment="Center" x:Name="BtnSearch" Click="BtnSearch_Click" Height="30" Content="&#xE71E;" FontFamily="Segoe MDL2 Assets"></Button>
                         <Button VerticalAlignment="Center" x:Name="BtnClearSearching" Click="BtnClearSearching_Click" Height="30" Width="auto">Сбросить</Button>
                     </StackPanel>
@@ -59,6 +59,9 @@
                 </TabItem.Header>
             </TabItem>
         </TabControl>
-        <Button HorizontalAlignment="Left" Name="BtnCreateOrder" Click="BtnCreateOrder_Click">Новый заказ</Button>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+            <Button  Name="BtnCreateOrder" Click="BtnCreateOrder_Click">Новый заказ</Button>
+            <Button Name="BtnStatOrder" Click="BtnStatOrder_Click">Статистика</Button>
+        </StackPanel>
     </Grid>
 </Page>

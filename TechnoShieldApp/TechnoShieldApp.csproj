@@ -44,14 +44,20 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,9 +67,11 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -132,6 +140,7 @@
     <Compile Include="Entities\ServiceOfProductInOrder.cs">
       <DependentUpon>ModelDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ServiceOfProductInOrderPartial.cs" />
     <Compile Include="Entities\StatusOfOrder.cs">
       <DependentUpon>ModelDataBase.tt</DependentUpon>
     </Compile>
@@ -163,11 +172,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Admin\AddWorkerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Admin\AdminMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Admin\ProductsAndServicesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Admin\WorkerListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,6 +204,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Manager\PrintOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Manager\PrintOrderStatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Manager\StatOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Manager\WorkerOfOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,11 +228,17 @@
     <Compile Include="Pages\Admin\AddServicePage.xaml.cs">
       <DependentUpon>AddServicePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Admin\AddWorkerPage.xaml.cs">
+      <DependentUpon>AddWorkerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Admin\AdminMenuPage.xaml.cs">
       <DependentUpon>AdminMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Admin\ProductsAndServicesPage.xaml.cs">
       <DependentUpon>ProductsAndServicesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\WorkerListPage.xaml.cs">
+      <DependentUpon>WorkerListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
@@ -216,6 +251,15 @@
     </Compile>
     <Compile Include="Pages\Manager\OrderListPage.xaml.cs">
       <DependentUpon>OrderListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\PrintOrderPage.xaml.cs">
+      <DependentUpon>PrintOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\PrintOrderStatPage.xaml.cs">
+      <DependentUpon>PrintOrderStatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\StatOrderPage.xaml.cs">
+      <DependentUpon>StatOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Manager\WorkerOfOrderPage.xaml.cs">
       <DependentUpon>WorkerOfOrderPage.xaml</DependentUpon>

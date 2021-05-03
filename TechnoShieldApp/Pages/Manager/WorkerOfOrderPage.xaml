@@ -19,6 +19,9 @@
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource TbkBody}">Должность:</TextBlock>
             <ComboBox DisplayMemberPath="Name" Name="CbRole" SelectionChanged="CbRole_SelectionChanged" Width="300"></ComboBox>
+            <TextBlock  Style="{StaticResource TbkBody}">ФИО:</TextBlock>
+            <TextBox x:Name="TbFio" TextChanged="TbFio_TextChanged" Width="250"></TextBox>
+            <Button Width="250">Сбросить параметры</Button>
         </StackPanel>
         <ListView AllowDrop="True" Drop="LVWorkers_Drop" Grid.Row="1" Margin="5" Name="LVWorkers">
             <ListView.ItemContainerStyle>

@@ -32,6 +32,10 @@ namespace TechnoShieldApp.Pages.Manager
         private void UpdateData()
         {
             DataContext = null;
+            if (_order.Worker.Count == 0)
+                TblWorkerInformation.Text = "Исполнителей заказа нет";
+            else
+                TblWorkerInformation.Text = "Информация об исполнителях закза";
             DataContext = _order;
             CbStatusOfOrder.ItemsSource = AppData.Context.StatusOfOrder.ToList();
             CbStatusOfOrder.SelectedItem = _order.StatusOfOrder;
@@ -44,12 +48,53 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnEditWorkers_Click(object sender, RoutedEventArgs e)
         {
-
+            AppData.MainFrame.Navigate(new WorkerOfOrderPage(_order));
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateData();
+        }
+
+        private void BtnSaveStatus_Click(object sender, RoutedEventArgs e)
+        {
+            StatusOfOrder statusOfOrder = (CbStatusOfOrder.SelectedItem as StatusOfOrder);
+            if (statusOfOrder.Name == "Завершён" && DpDatOfEnd.SelectedDate == null)
+            {
+                MessageBox.Show("Чтобы завершить заказ, необходимо выбрать дату завершеия",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if(statusOfOrder.Name == "Завершён")
+            {
+                _order.StatusOfOrder = statusOfOrder;
+                _order.DateTimeOfEnd = DpDatOfEnd.SelectedDate;
+            }
+            else
+            {
+                _order.StatusOfOrder = statusOfOrder;
+                _order.DateTimeOfEnd = DpDatOfEnd.SelectedDate;
+            }
+            AppData.Context.SaveChanges();
+        }
+
+        private void CbStatusOfOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if((CbStatusOfOrder.SelectedItem as StatusOfOrder).Name == "Завершён")
+            {
+                DpDatOfEnd.SelectedDate = DateTime.Now;
+                DpDatOfEnd.IsEnabled = true;
+            }
+            else
+            {
+                DpDatOfEnd.SelectedDate = null;
+                DpDatOfEnd.IsEnabled = false;
+            }
+        }
+
+        private void BtnPrintOrder_Click(object sender, RoutedEventArgs e)
+        {
+            AppData.MainFrame.Navigate(new PrintOrderPage(_order));
         }
     }
 }

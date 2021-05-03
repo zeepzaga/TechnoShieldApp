@@ -39,7 +39,7 @@ namespace TechnoShieldApp.Pages.Admin
 
         private void BtnWorkers_Click(object sender, RoutedEventArgs e)
         {
-
+            AppData.MainFrame.Navigate(new WorkerListPage());
         }
 
         private void BtnStat_Click(object sender, RoutedEventArgs e)

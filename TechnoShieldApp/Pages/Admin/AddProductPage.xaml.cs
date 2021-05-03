@@ -127,7 +127,7 @@ namespace TechnoShieldApp.Pages.Admin
 
         private void TextBlock_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (MessageBox.Show("Удалить фото продукта", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Удалить фото продукта?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _photo = null;
                 ImgProduct.Source = null;
