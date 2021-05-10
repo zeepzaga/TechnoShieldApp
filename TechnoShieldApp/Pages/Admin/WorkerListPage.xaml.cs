@@ -35,7 +35,7 @@ namespace TechnoShieldApp.Pages.Admin
 
         private void BtnAboutWorker_Click(object sender, RoutedEventArgs e)
         {
-            AppData.MainFrame.Navigate(new AddWorkerPage((sender as Button).DataContext as Worker));
+            AppData.MainFrame.Navigate(new AddWorkerPage((sender as Button).DataContext as Worker, true));
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -78,7 +78,7 @@ namespace TechnoShieldApp.Pages.Admin
 
         private void BtnAddWorker_Click(object sender, RoutedEventArgs e)
         {
-            AppData.MainFrame.Navigate(new AddWorkerPage(null));
+            AppData.MainFrame.Navigate(new AddWorkerPage(null, false));
         }
 
         private void BtnClearSearch_Click(object sender, RoutedEventArgs e)

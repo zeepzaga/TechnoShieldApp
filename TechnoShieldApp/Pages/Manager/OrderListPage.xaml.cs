@@ -35,6 +35,7 @@ namespace TechnoShieldApp.Pages.Manager
             CbOrganization.ItemsSource = _listOrganization;
             CbOrganization.SelectedIndex = 0;
             UpdateOrderList();
+            UpdateOrderReadyList();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -44,7 +45,7 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void UpdateOrderList()
         {
-            List<Order> _searchList = _listOrders;
+            List<Order> _searchList = _listOrders.OrderByDescending(p=>p.DateTimeOfCreate).ToList();
             if (DpEnd.SelectedDate != null)
                 _searchList = _searchList.Where(p => p.DateTimeOfCreate.Date <= DpEnd.SelectedDate.Value).ToList();
             if (DpStart.SelectedDate != null)
@@ -53,6 +54,19 @@ namespace TechnoShieldApp.Pages.Manager
                 _searchList = _searchList.Where(p => p.Organization == CbOrganization.SelectedItem as Organization).ToList();
             IcOrders.ItemsSource = null;
             IcOrders.ItemsSource = _searchList;
+        }
+
+        private void UpdateOrderReadyList()
+        {
+            List<Order> _searchList = _listOrders.Where(p => p.StatusOfOrderId == 4).ToList().OrderBy(p => p.DateTimeOfEnd).ToList();
+            if (DpEnd.SelectedDate != null)
+                _searchList = _searchList.Where(p => p.DateTimeOfEnd.Value <= DpEnd.SelectedDate.Value).ToList();
+            if (DpStart.SelectedDate != null)
+                _searchList = _searchList.Where(p => p.DateTimeOfEnd.Value >= DpStart.SelectedDate.Value).ToList();
+            if (CbOrganization.SelectedIndex > 0)
+                _searchList = _searchList.Where(p => p.Organization == CbOrganization.SelectedItem as Organization).ToList();
+            IcOrdersReady.ItemsSource = null;
+            IcOrdersReady.ItemsSource = _searchList;
         }
 
         private void BtnClearSearching_Click(object sender, RoutedEventArgs e)
@@ -69,21 +83,19 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnStatOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (DpEnd.SelectedDate != null || DpStart.SelectedDate != null)
-            {
-                if (DpEnd.SelectedDate != null && DpStart.SelectedDate != null)
-                    AppData.MainFrame.Navigate(new StatOrderPage(DpStart.SelectedDate.Value, DpEnd.SelectedDate.Value));
-                else if (DpStart.SelectedDate!=null)
-                    AppData.MainFrame.Navigate(new StatOrderPage(DpStart.SelectedDate.Value, null));
-                else if (DpEnd.SelectedDate != null)
-                    AppData.MainFrame.Navigate(new StatOrderPage(null, DpEnd.SelectedDate.Value));
-            }
-            else
-            {
-                AppData.MainFrame.Navigate(new StatOrderPage(null, null));
-            }
+            AppData.MainFrame.Navigate(new StatOrderPage(DpStart.SelectedDate, DpEnd.SelectedDate));
+        }
 
+        private void BtnSearchReady_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateOrderReadyList();
+        }
 
+        private void BtnClearSearchingReady_Click(object sender, RoutedEventArgs e)
+        {
+            DpStartReadyOrder.SelectedDate = DpEndReadyOrder.SelectedDate = null;
+            CbOrganizationEndReadyOrder.SelectedIndex = 0;
+            UpdateOrderReadyList();
         }
     }
 }

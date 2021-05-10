@@ -82,6 +82,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\OrderListReadyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ProductControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -96,6 +100,9 @@
     </Compile>
     <Compile Include="Controls\OrderListControl.xaml.cs">
       <DependentUpon>OrderListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OrderListReadyControl.xaml.cs">
+      <DependentUpon>OrderListReadyControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ProductControl.xaml.cs">
       <DependentUpon>ProductControl.xaml</DependentUpon>
@@ -196,6 +203,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Manager\ManagerMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Manager\OrderDetailViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,6 +256,9 @@
     </Compile>
     <Compile Include="Pages\Manager\CreateOrderPage.xaml.cs">
       <DependentUpon>CreateOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\ManagerMenuPage.xaml.cs">
+      <DependentUpon>ManagerMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Manager\OrderDetailViewPage.xaml.cs">
       <DependentUpon>OrderDetailViewPage.xaml</DependentUpon>

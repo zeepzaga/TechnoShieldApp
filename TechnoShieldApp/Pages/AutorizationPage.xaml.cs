@@ -91,6 +91,7 @@ namespace TechnoShieldApp.Pages
                     AppData.MainFrame.Navigate(new Admin.AdminMenuPage());
                     break;
                 case 2:
+                    AppData.MainFrame.Navigate(new Manager.ManagerMenuPage());
                     break;
                 default:
                     break;

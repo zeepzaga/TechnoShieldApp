@@ -33,6 +33,11 @@ namespace TechnoShieldApp.Pages.Manager
             {
                 _listWorkers = AppData.Context.Worker.ToList().Where(p => p.RoleId != 1).ToList();
                 _listSelectedWorker = order.Worker.ToList();
+                foreach (var item in _listSelectedWorker)
+                {
+                    if (_listWorkers.FirstOrDefault(p => p == item) != null)
+                        _listWorkers.Remove(item);
+                }
                 _roleList = AppData.Context.Role.ToList().Where(p => p.Id != 1).ToList();
                 _roleList.Insert(0, new Role
                 {
@@ -57,11 +62,19 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var item in _listWorkers)
+            {
+                if (_order.Worker.ToList().FirstOrDefault(p => p == item) != null)
+                {
+                    _order.Worker.Remove(item);
+                    AppData.Context.SaveChanges();
+                }
+            }
             foreach (var item in _listSelectedWorker)
             {
                 if (_order.Worker.Count != 0)
                 {
-                    if (_order.Worker.ToList().FirstOrDefault(p => p == item) != null)
+                    if (_order.Worker.ToList().FirstOrDefault(p => p == item) == null)
                     {
                         _order.Worker.Add(item);
                         AppData.Context.SaveChanges();
@@ -70,14 +83,6 @@ namespace TechnoShieldApp.Pages.Manager
                 else
                 {
                     _order.Worker.Add(item);
-                    AppData.Context.SaveChanges();
-                }
-            }
-            foreach (var item in _listWorkers)
-            {
-                if (_order.Worker.ToList().FirstOrDefault(p => p == item) != null)
-                {
-                    _order.Worker.Remove(item);
                     AppData.Context.SaveChanges();
                 }
             }
@@ -120,7 +125,7 @@ namespace TechnoShieldApp.Pages.Manager
                 searchList = _listWorkers.Where(p => p.Role == CbRole.SelectedItem as Role).ToList().OrderBy(p => p.Id).ToList();
                 searchSelectedList = _listSelectedWorker.Where(p => p.Role == CbRole.SelectedItem as Role).ToList();
             }
-            LVWorkers.ItemsSource = searchList.Where(p=>p.FIO.ToLower().Contains(TbFio.Text.ToLower())).ToList();
+            LVWorkers.ItemsSource = searchList.Where(p => p.FIO.ToLower().Contains(TbFio.Text.ToLower())).ToList();
             LvSelectedWorkers.ItemsSource = searchSelectedList;
         }
 

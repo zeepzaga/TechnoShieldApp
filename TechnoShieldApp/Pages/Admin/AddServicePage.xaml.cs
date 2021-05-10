@@ -69,12 +69,21 @@ namespace TechnoShieldApp.Pages.Admin
                     product.TypeOfService = null;
                     AppData.Context.SaveChanges();
                 }
+                TypeOfService typeOfService = AppData.Context.TypeOfService.ToList().FirstOrDefault(p => p.Name.ToLower().Trim().Contains(CbTypeOfService.Text.ToLower().Trim()));
+                if (typeOfService == null)
+                {
+                     typeOfService = AppData.Context.TypeOfService.Add(new TypeOfService
+                    {
+                        Name = CbTypeOfService.Text,
+                    });
+                    
+                    AppData.Context.SaveChanges();
+                }
                 foreach (var item in _listSelectedProduct)
                 {
-                    TypeOfService typeOfService = CbTypeOfService.SelectedItem as TypeOfService;
                     if (typeOfService.Product.ToList().Where(p => p.Id == item.Id) != null)
                     {
-                        var product = AppData.Context.Product.ToList().FirstOrDefault(p=>p.Id == item.Id);
+                        var product = AppData.Context.Product.ToList().FirstOrDefault(p => p.Id == item.Id);
                         product.TypeOfService = typeOfService;
                         AppData.Context.SaveChanges();
                     }
@@ -86,8 +95,8 @@ namespace TechnoShieldApp.Pages.Admin
                         AppData.Context.Service.Add(new Service
                         {
                             Name = TbName.Text,
-                            Price = decimal.TryParse(TbPrice.Text.Replace('.',','), out _price) == false ? 0 : _price,
-                            TypeOfService = CbTypeOfService.SelectedItem as TypeOfService,
+                            Price = decimal.TryParse(TbPrice.Text.Replace('.', ','), out _price) == false ? 0 : _price,
+                            TypeOfService = typeOfService,
                             Description = TbDexription.Text,
                         });
                         MessageBox.Show("Улуга добавлена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -102,7 +111,7 @@ namespace TechnoShieldApp.Pages.Admin
                 else
                 {
                     _service.Name = TbName.Text;
-                    _service.Price = decimal.TryParse(TbPrice.Text.Replace('.',','), out _price) == false ? 0 : _price;
+                    _service.Price = decimal.TryParse(TbPrice.Text.Replace('.', ','), out _price) == false ? 0 : _price;
                     _service.TypeOfService = CbTypeOfService.SelectedItem as TypeOfService;
                     _service.Description = TbDexription.Text;
                     AppData.Context.SaveChanges();
@@ -127,7 +136,7 @@ namespace TechnoShieldApp.Pages.Admin
             CbProduct.ItemsSource = null;
             CbProduct.ItemsSource = _listProduct;
             ICSelectedProduct.ItemsSource = null;
-            ICSelectedProduct.ItemsSource = _listSelectedProduct.OrderBy(p=>p.Id).ToList();
+            ICSelectedProduct.ItemsSource = _listSelectedProduct.OrderBy(p => p.Id).ToList();
         }
 
 
@@ -137,6 +146,8 @@ namespace TechnoShieldApp.Pages.Admin
             var product = (sender as Button).DataContext as Product;
             _listProduct.Add(product);
             _listSelectedProduct.Remove(product);
+            product.TypeOfService = null;
+            AppData.Context.SaveChanges();
             UpdateList();
         }
 

@@ -22,10 +22,12 @@ namespace TechnoShieldApp.Pages.Admin
     public partial class AddWorkerPage : Page
     {
         private Worker _worker;
-        public AddWorkerPage(Worker worker)
+        private bool _isEdit;
+        public AddWorkerPage(Worker worker, bool isEdit)
         {
             InitializeComponent();
             CbRole.ItemsSource = AppData.Context.Role.ToList();
+            _isEdit = isEdit;
             _worker = worker;
             if (worker != null)
             {
@@ -105,7 +107,7 @@ namespace TechnoShieldApp.Pages.Admin
                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
-                    if (IsLoginFree() == false)
+                    if (IsLoginFree() == false && _isEdit == false)
                     {
                         MessageBox.Show("Такой логин уже существует",
                   "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);

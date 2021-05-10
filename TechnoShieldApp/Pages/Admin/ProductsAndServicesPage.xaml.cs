@@ -63,8 +63,16 @@ namespace TechnoShieldApp.Pages.Admin
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Product product = ((sender as TextBlock).DataContext as Product);
-            if (MessageBox.Show($"Удалить товар:\n{product.Name}", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Удалить товар:\n{product.Name}\nВ том числе и записи в заказах", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
+                foreach (var item in AppData.Context.ServiceOfProductInOrder.ToList().Where(p=>p.Product == product).ToList())
+                {
+                    AppData.Context.ServiceOfProductInOrder.Remove(item);
+                }
+                foreach (var item in AppData.Context.Purchase.ToList().Where(p => p.Product == product).ToList())
+                {
+                    AppData.Context.Purchase.Remove(item);
+                }
                 AppData.Context.Product.Remove(product);
                 AppData.Context.SaveChanges();
                 IcProducts.ItemsSource = null;

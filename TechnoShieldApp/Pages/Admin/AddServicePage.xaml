@@ -18,7 +18,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Style="{StaticResource TbkBody}">Тип услуги:</TextBlock>
-                    <ComboBox DisplayMemberPath="Name" Name="CbTypeOfService" SelectionChanged="CbTypeOfService_SelectionChanged" Width="300"></ComboBox>
+                    <ComboBox DisplayMemberPath="Name" IsEditable="True" IsTextSearchEnabled="True" Name="CbTypeOfService" SelectionChanged="CbTypeOfService_SelectionChanged" Width="300"></ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock VerticalAlignment="Top" Style="{StaticResource TbkBody}">Описание:</TextBlock>

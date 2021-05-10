@@ -57,6 +57,39 @@
                 <TabItem.Header>
                     <TextBlock Style="{StaticResource TbkTriggered}">Выполненные заказы</TextBlock>
                 </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="1"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TbkBody}">Начало периода:</TextBlock>
+                        <DatePicker Name="DpStartReadyOrder"></DatePicker>
+                        <TextBlock Style="{StaticResource TbkBody}">Конец периода:</TextBlock>
+                        <DatePicker Name="DpEndReadyOrder"></DatePicker>
+                        <TextBlock Style="{StaticResource TbkBody}">Организация:</TextBlock>
+                        <ComboBox DisplayMemberPath="Name" x:Name="CbOrganizationEndReadyOrder" Width="185"></ComboBox>
+                        <Button Width="50" VerticalAlignment="Center" x:Name="BtnSearchReady" Click="BtnSearchReady_Click" Height="30" Content="&#xE71E;" FontFamily="Segoe MDL2 Assets"></Button>
+                        <Button VerticalAlignment="Center" x:Name="BtnClearSearchingReady" Click="BtnClearSearchingReady_Click" Height="30" Width="auto">Сбросить</Button>
+                    </StackPanel>
+                    <Grid Background="Black" Grid.Row="1"></Grid>
+                    <ScrollViewer Grid.Row="2">
+                        <ItemsControl x:Name="IcOrdersReady">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <controls:OrderListReadyControl Grid.ColumnSpan="2" Grid.Row="1"></controls:OrderListReadyControl>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
             </TabItem>
         </TabControl>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
