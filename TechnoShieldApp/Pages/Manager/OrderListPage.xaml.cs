@@ -33,7 +33,8 @@ namespace TechnoShieldApp.Pages.Manager
                 Name = "Все органиации"
             });
             CbOrganization.ItemsSource = _listOrganization;
-            CbOrganization.SelectedIndex = 0;
+            CbOrganizationEndReadyOrder.ItemsSource = CbOrganizationEndReadyOrder.ItemsSource = _listOrganization;
+            CbOrganization.SelectedIndex = CbOrganizationEndReadyOrder.SelectedIndex = 0;
             UpdateOrderList();
             UpdateOrderReadyList();
         }
@@ -63,7 +64,7 @@ namespace TechnoShieldApp.Pages.Manager
                 _searchList = _searchList.Where(p => p.DateTimeOfEnd.Value <= DpEnd.SelectedDate.Value).ToList();
             if (DpStart.SelectedDate != null)
                 _searchList = _searchList.Where(p => p.DateTimeOfEnd.Value >= DpStart.SelectedDate.Value).ToList();
-            if (CbOrganization.SelectedIndex > 0)
+            if (CbOrganizationEndReadyOrder.SelectedIndex > 0)
                 _searchList = _searchList.Where(p => p.Organization == CbOrganization.SelectedItem as Organization).ToList();
             IcOrdersReady.ItemsSource = null;
             IcOrdersReady.ItemsSource = _searchList;

@@ -28,8 +28,8 @@ namespace TechnoShieldApp.Pages.Manager
             StringBuilder result = new StringBuilder();
             result.Append(@"<!DOCTYPE html ><html><meta http-equiv='Content-Type' content='text/html;charset=UTF-8'><head></head>");
             result.Append("<body>");
-            result.Append($"<h1 align=\"center\">Заказ номер {order.Id}</h1>");
-            result.Append($"<h3>Заказы</h3>");
+            result.Append("<h1 align=\"center\">ООО \"ТЕХНО-ЩИТ\"</h1>");
+            result.Append($"<h2 align=\"center\">Заказ номер {order.Id}</h2>");
             result.Append("<table width=100% border=1 bordercolor=#000 style='border-collapse:collapse;'>");
             result.Append("<tr>");
             if (order.Purchase.Count != 0)
@@ -94,6 +94,7 @@ namespace TechnoShieldApp.Pages.Manager
             result.Append("<tr><td align=\"right\" colspan=\"5\">ИТОГО:</td>");
             result.Append($"<td colspan=\"2\" align=\"left\">{_servicesTotalPrice + order.Purchase.Sum(p => p.TotalPrice)}</td></tr>");
             result.Append("</table>");
+            result.Append("<p>Заказчик: ________________________</p>");
             result.Append("</body>");
             result.Append("</html>");
             WebBrowserMain.NavigateToString(result.ToString());

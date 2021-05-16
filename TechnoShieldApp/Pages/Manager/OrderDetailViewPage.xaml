@@ -129,7 +129,7 @@
                 <RowDefinition Height="{Binding WorkerGridLength}"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="TblWorkerInformation" Style="{StaticResource TbkBody}" FontWeight="Bold" HorizontalAlignment="Center" FontSize="30">Информация об исполнителях закза</TextBlock>
+            <TextBlock x:Name="TblWorkerInformation" Style="{StaticResource TbkBody}" FontWeight="Bold" HorizontalAlignment="Center" FontSize="30">Информация об исполнителях заказа</TextBlock>
             <ScrollViewer Margin="5" Grid.Row="1">
                 <ItemsControl  ItemsSource="{Binding Worker}">
                     <ItemsControl.ItemTemplate>

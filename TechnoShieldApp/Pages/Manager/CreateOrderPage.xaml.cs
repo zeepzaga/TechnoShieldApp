@@ -192,6 +192,11 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrWhiteSpace(CbOrganizationName.Text))
+            {
+                MessageBox.Show("Выберите компанию-заказчик", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             Organization organization = new Organization();
             if (CbOrganizationName.SelectedItem == null)
             {
@@ -250,7 +255,7 @@ namespace TechnoShieldApp.Pages.Manager
                 }
                 AppData.Context.SaveChanges();
                 MessageBox.Show("Заказ успешно создан\nВас перенаправит на страницу добалвения бригады для заказа", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
-                AppData.MainFrame.Navigate(new OrderDetailViewPage(_order));
+                AppData.MainFrame.Navigate(new WorkerOfOrderPage(order));
             }
             else
             {
@@ -309,7 +314,7 @@ namespace TechnoShieldApp.Pages.Manager
                     }
                 }
                 List<Purchase> purchasesForDelete = new List<Purchase>();
-                foreach (var item in AppData.Context.Purchase.ToList().Where(p=>p.Order == _order))
+                foreach (var item in AppData.Context.Purchase.ToList().Where(p => p.Order == _order))
                 {
                     if (_listPurchase.FirstOrDefault(p => p.Product == item.Product) == null)
                         purchasesForDelete.Add(item);

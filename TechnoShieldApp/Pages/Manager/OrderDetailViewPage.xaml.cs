@@ -32,7 +32,7 @@ namespace TechnoShieldApp.Pages.Manager
         private void UpdateData()
         {
             DataContext = null;
-            if (_order.Worker.Count == 0)
+            if (_order.Worker.ToList().Count == 0)
                 TblWorkerInformation.Text = "Исполнителей заказа нет";
             else
                 TblWorkerInformation.Text = "Информация об исполнителях закза";

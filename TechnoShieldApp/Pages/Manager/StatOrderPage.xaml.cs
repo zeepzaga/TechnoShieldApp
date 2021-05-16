@@ -34,8 +34,6 @@ namespace TechnoShieldApp.Pages.Manager
             {
                 Name = "Все организации"
             });
-            CbOrganization.ItemsSource = _listOrganization;
-            CbOrganization.SelectedIndex = 0;
             ChartProduct.ChartAreas.Add(new ChartArea("Main"));
             Series currentSeriesProduct = new Series("Product")
             {
@@ -55,8 +53,10 @@ namespace TechnoShieldApp.Pages.Manager
             };
             ChartOrder.Series.Add(seriesPoint);
             ChartOrder.Series.Add(seriesLine);
-            UpdateChartProduct();
+            CbOrganization.ItemsSource = _listOrganization;
+            CbOrganization.SelectedIndex = 0;
             UpdateChartOrder();
+            UpdateChartProduct();
         }
         private void UpdateChartProduct()
         {
@@ -85,12 +85,14 @@ namespace TechnoShieldApp.Pages.Manager
                 purchaseList = purchaseList
                     .Where(p => p.Order.DateTimeOfCreate.Date >= DpStart.SelectedDate.Value.Date).ToList();
             if (CbOrganization.SelectedIndex > 0)
+            {
                 purchaseList = purchaseList
                     .Where(p => p.Order.Organization == CbOrganization.SelectedItem as Organization).ToList();
+            }
             Series currentSeries = ChartProduct.Series.FirstOrDefault();
             currentSeries.ChartType = SeriesChartType.StackedColumn;
             currentSeries.Points.Clear();
-            foreach (var item in purchaseList.OrderByDescending(p=>p.Count)
+            foreach (var item in purchaseList.OrderByDescending(p => p.Count)
                 .ToList().GroupBy(p => p.Product).ToList().Take(9))
             {
                 currentSeries.Points.AddXY(item.Key.Name, purchaseList
@@ -171,13 +173,6 @@ namespace TechnoShieldApp.Pages.Manager
 
         private void BtnPrintStatd_Click(object sender, RoutedEventArgs e)
         {
-            //RenderTargetBitmap rtb = new RenderTargetBitmap((int)GridChartProduct.ActualWidth, (int)GridChartProduct.ActualHeight,
-            //    96d, 96d, PixelFormats.Pbgra32);
-            //rtb.Render(GridChartProduct);
-            //var encoder = new JpegBitmapEncoder();
-            //encoder.Frames.Add(BitmapFrame.Create(rtb));
-            //using (var stream = File.Create("pngProductStat.jpeg"))
-            //encoder.Save(stream);
             AppData.MainFrame.Navigate(new PrintOrderStatPage(DpStart.SelectedDate, DpEnd.SelectedDate, null));
         }
     }

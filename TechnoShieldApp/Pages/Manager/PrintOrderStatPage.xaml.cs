@@ -48,8 +48,8 @@ namespace TechnoShieldApp.Pages.Manager
                 titile += $"\n Организация: {organization.Name}";
                 _listOrder = _listOrder.Where(p => p.Organization == organization).ToList();
             }
-            result.Append($"<h1 align=\"center\">{titile}</h1>");
-            result.Append($"<h3>Заказы</h3>");
+            result.Append("<h1 align=\"center\">ООО \"ТЕХНО-ЩИТ\"</h1>");
+            result.Append($"<h2 align=\"center\">{titile}</h2>");
             result.Append("<table width=100% border=1 bordercolor=#000 style='border-collapse:collapse;'>");
             result.Append("<tr>");
             result.Append("<th>Организация-заказчик</th>");

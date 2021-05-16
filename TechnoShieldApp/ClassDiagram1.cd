@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TechnoShieldApp.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAQAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Admin.AddProductPage" BaseTypeListCollapsed="true">
+    <Position X="2" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACAABAAAAAAAAAAAAAAAAAAAAAAIEAEEAAAAA=</HashCode>
+      <FileName>Pages\Admin\AddProductPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Admin.AddServicePage" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAgAAAAAAAIQAAAAAAAAIAABBAAAAAAAAEIAAAA=</HashCode>
+      <FileName>Pages\Admin\AddServicePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Admin.AddWorkerPage" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAQAAQAAAAQAAAgAAAAAAAAAAAAAAAAAAEAAiAA=</HashCode>
+      <FileName>Pages\Admin\AddWorkerPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Admin.AdminMenuPage" BaseTypeListCollapsed="true">
+    <Position X="20" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAwAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Pages\Admin\AdminMenuPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Admin.ProductsAndServicesPage" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAgECQAAgAAAAJDAAAQQMAACBAAAohAAgAAAACQ=</HashCode>
+      <FileName>Pages\Admin\ProductsAndServicesPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Admin.WorkerListPage" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAMAAAgCAAAAAQAAAAAAAAAAAoAAAQE=</HashCode>
+      <FileName>Pages\Admin\WorkerListPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.AutorizationPage" BaseTypeListCollapsed="true">
+    <Position X="29" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAEAAAABAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\AutorizationPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.CreateOrderPage" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEYgAgKAEAAAAEAgEBAAUAAAAAFAQEAABCAAAMiAAA=</HashCode>
+      <FileName>Pages\Manager\CreateOrderPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.ManagerMenuPage" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Manager\ManagerMenuPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.OrderDetailViewPage" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACEAAAAAAAgAIAAAAAAQAAAAAAAAAAAAACIIA=</HashCode>
+      <FileName>Pages\Manager\OrderDetailViewPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.OrderListPage" BaseTypeListCollapsed="true">
+    <Position X="31.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAwAAAAAAAAEAAAAAAQAAAAACAAAQAACAAAEAAAAAg=</HashCode>
+      <FileName>Pages\Manager\OrderListPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.PrintOrderPage" BaseTypeListCollapsed="true">
+    <Position X="17.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Pages\Manager\PrintOrderPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.PrintOrderStatPage" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Pages\Manager\PrintOrderStatPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.StatOrderPage" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAFAAAAAAAGAAAAAAAAAAAAQEAAAAAACAAAAA=</HashCode>
+      <FileName>Pages\Manager\StatOrderPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TechnoShieldApp.Pages.Manager.WorkerOfOrderPage" BaseTypeListCollapsed="true">
+    <Position X="11" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAQAAACACAEIBAAAAgAAAAAQAAAAAAAEAAAAsAAAQE=</HashCode>
+      <FileName>Pages\Manager\WorkerOfOrderPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Windows.Window" Collapsed="true">
+    <Position X="22.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Windows.Controls.Page" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
